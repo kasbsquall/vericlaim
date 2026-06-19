@@ -6,9 +6,10 @@
 
 ### Adversarial AI that fights for your insurance claim — callable on-chain.
 
-**Five specialized AI agents debate an insurance-claim denial and return a legally-defensible
-resolution + tamper-evident SHA-256 audit trail in under two minutes — hireable by any human or
-agent for $0.10 USDC on [CROO](https://agent.croo.network).**
+**Five specialized AI agents — plus a dynamic sixth (an SIU fraud investigator) recruited when a
+denial alleges fraud — debate an insurance-claim denial and return a legally-defensible resolution
++ tamper-evident SHA-256 audit trail in under two minutes. Hireable by any human or agent for
+$0.10 USDC on [CROO](https://agent.croo.network).**
 
 `CROO Agent Hackathon` · `DoraHacks` · Tracks: **Data & Verification** + **Research & Intelligence**
 
@@ -49,8 +50,8 @@ or **any other agent** — can hire it over **CAP (CROO Agent Protocol)** and pa
         ▼
   Debate Engine  (agent/debate_engine.py — 5 agents, in-process)
         │
-        │   Coordinator → 🔵 Blake → 🟣 Morgan(+RAG) → 🔴 Alex → 🟢 Sam
-        │   (case file)  (evaluate) (quote clauses) (attack denial) (rule)
+        │   Coordinator → Blake → Morgan(+RAG) → Alex → [⚡ Quinn — only if fraud alleged] → Sam
+        │   (case file)  (evaluate) (quote clauses)(attack denial)  (SIU investigation)         (rule)
         ▼
   Resolution  +  SHA-256 over {claim, transcript, decision, amount}
         │  deliver_order(TEXT)  →  caller       └─ saved to PostgreSQL (verifications)
@@ -66,10 +67,16 @@ or **any other agent** — can hire it over **CAP (CROO Agent Protocol)** and pa
 | 🔵 **Blake** | Claims Evaluator | GPT-4o · AI/ML API | Cold, data-driven first read |
 | 🟣 **Morgan** | Policy Analyst (RAG over pgvector) | GPT-4o · AI/ML API | Quotes clauses **verbatim** — never from memory |
 | 🔴 **Alex** | Devil's Advocate | Hermes-2-Pro · Featherless (failover GPT-4o) | **Argues against the denial** — finds the exception |
+| 🟪 **Quinn** ⚡ | SIU Investigator — **recruited only when fraud is alleged** | GPT-4o · AI/ML API | The **dynamic 6th agent** — tests whether a fraud/misrepresentation allegation is actually substantiated, so coverage is never defeated on unproven suspicion |
 | 🟢 **Sam** | Resolution Notary | GPT-4o · AI/ML API | Issues the binding, structured verdict |
 
 This is the differentiator: **not a single-LLM wrapper** — a genuine multi-agent adversarial process
-with a visible transcript, where one agent literally fights *against* the denial on your behalf.
+with a visible transcript, where one agent literally fights *against* the denial on your behalf. And
+the panel **adapts to the case**: a normal coverage dispute runs the 5-agent debate; the moment the
+denial alleges **fraud or misrepresentation**, VeriClaim dynamically **recruits a 6th specialist
+(Quinn, SIU)** to investigate the allegation before any verdict is issued. *(Demo: the David Chen
+collision runs 5 agents → APPROVED $12,000; the Lisa Park "undisclosed rideshare" denial recruits
+Quinn → APPROVED $3,700, because the fraud allegation has no evidence behind it.)*
 
 ## Agents hiring agents (A2A composability)
 

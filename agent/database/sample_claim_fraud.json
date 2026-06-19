@@ -1,0 +1,27 @@
+{
+  "claim_number": "CLM-2024-03988",
+  "policy_id": "CPP-2024-7741",
+  "policy": {
+    "policy_type": "Auto / Collision + Comprehensive",
+    "insured_name": "Lisa Park",
+    "insurance_company": "Crestview Mutual Insurance",
+    "coverage_limit": 50000.0,
+    "deductible": 500.0
+  },
+  "incident_type": "theft",
+  "incident_description": "Vehicle stereo and catalytic converter stolen overnight from the vehicle while parked outside the insured's residence in Miami, FL. Police report filed within 24 hours. The insured disputes the commercial-use allegation, stating the vehicle is for personal use only. Theft is a comprehensive-coverage event under §5.2.",
+  "original_denial_reason": "Claim denied per §7.4 — General Exclusions. Adjuster alleges the vehicle was used for undisclosed commercial (rideshare) purposes, voiding comprehensive coverage.",
+  "amount_requested": 4200.0,
+  "supporting_docs": [
+    {
+      "type": "police_report",
+      "ref": "MPD-2024-5567",
+      "summary": "Overnight theft of stereo and catalytic converter from a parked vehicle outside the residence; reported within 24h; no indication of commercial use."
+    },
+    {
+      "type": "adjuster_note",
+      "ref": "ADJ-2024-3310",
+      "summary": "Denial cites suspected undisclosed rideshare use — but no rideshare records, trip logs, or commercial markings are offered as evidence."
+    }
+  ]
+}

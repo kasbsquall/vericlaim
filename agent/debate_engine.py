@@ -14,7 +14,7 @@ import re
 from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 
-from agents import alex, blake, coordinator, morgan, sam
+from agents import alex, blake, coordinator, morgan, quinn, sam
 from database.connection import AsyncSessionLocal
 from utils.audit import hash_resolution
 
@@ -77,6 +77,23 @@ def _retrieval_query(payload: dict) -> str:
     ).strip()
 
 
+# Dynamic SIU recruitment triggers — kept specific so they fire only on fraud/misrepresentation
+# denials, not ordinary coverage disputes (the David Chen collision never trips them; a denial
+# alleging "undisclosed commercial / rideshare use" does).
+_FRAUD_TRIGGERS = (
+    "rideshare", "undisclosed", "commercial purpose", "commercial use", "staged",
+    "false statement", "material misstatement", "misrepresentation", "concealment", "fraud",
+)
+
+
+def _alleges_fraud(payload: dict) -> bool:
+    """True when the denial alleges fraud/misrepresentation — recruits Quinn (SIU) into the debate."""
+    blob = " ".join(
+        str(payload.get(k, "")) for k in ("original_denial_reason", "incident_description")
+    ).lower()
+    return any(t in blob for t in _FRAUD_TRIGGERS)
+
+
 async def run_debate(payload: dict) -> DebateResult:
     """Drive the full adjudication for a CAP claim payload and return the result."""
     policy = payload.get("policy") or {}
@@ -106,6 +123,13 @@ async def run_debate(payload: dict) -> DebateResult:
     context.append(("Alex", alex_text))
     transcript.append({"slug": "alex", "agent": "Alex", "content": alex_text})
 
+    # Dynamic 6th agent: recruit Quinn (SIU) into the debate ONLY when fraud/misrepresentation is
+    # alleged. Otherwise the standing 5-agent panel is unchanged.
+    if _alleges_fraud(payload):
+        quinn_text = await quinn.run(context)
+        context.append(("Quinn", quinn_text))
+        transcript.append({"slug": "quinn", "agent": "Quinn", "content": quinn_text})
+
     sam_text = _strip_fences(await sam.run(context, financials))
     context.append(("Sam", sam_text))
     transcript.append({"slug": "sam", "agent": "Sam", "content": sam_text})
@@ -128,7 +152,7 @@ async def run_debate(payload: dict) -> DebateResult:
         cited_clauses=parsed["cited_clauses"],
         audit_hash=audit["sha256"],
         transcript=transcript,
-        agents_involved=["Blake", "Morgan", "Alex", "Sam"],
+        agents_involved=[t["agent"] for t in transcript if t["slug"] != "coordinator"],
     )
 
 
