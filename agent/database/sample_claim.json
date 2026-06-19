@@ -1,0 +1,32 @@
+{
+  "claim_number": "CLM-2024-04471",
+  "policy_id": "CPP-2024-8821",
+  "policy": {
+    "policy_type": "Auto / Collision + Comprehensive",
+    "insured_name": "David Chen",
+    "insurance_company": "Crestview Mutual Insurance",
+    "coverage_limit": 50000.0,
+    "deductible": 0.0
+  },
+  "incident_type": "collision",
+  "incident_description": "Vehicle struck guardrail at approximately 35 mph on I-95 North near Fort Lauderdale, FL. Airbags deployed. Front-end and engine compartment sustained severe damage. Engine seized following impact. Police report FHP-2024-10153 documents the accident. Witness statement from Marcus T. (FHP report page 2) confirms the vehicle lost control upon guardrail contact before the engine ceased operation.",
+  "original_denial_reason": "Claim denied per \u00a77.3 \u2014 Mechanical Failure Exclusion. Adjuster assessment indicates mechanical failure preceded the collision event.",
+  "amount_requested": 12000.0,
+  "supporting_docs": [
+    {
+      "type": "police_report",
+      "ref": "FHP-2024-10153",
+      "summary": "Collision with guardrail on I-95. Witness confirms vehicle was in motion when guardrail contact occurred. Engine failure documented post-impact."
+    },
+    {
+      "type": "mechanic_report",
+      "ref": "BM-AUTO-2024-089",
+      "summary": "Engine seized due to catastrophic impact damage to oil pan and crankshaft. Failure consistent with high-force collision, not pre-existing mechanical issue."
+    },
+    {
+      "type": "photos",
+      "ref": "CLM-2024-04471-imgs",
+      "summary": "4 photos showing front-end crushing consistent with 35 mph guardrail impact."
+    }
+  ]
+}

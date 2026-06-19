@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="ReportExporter">
+  <rect width="400" height="400" fill="#FFFFFF"/>
+  <path d="M130,106 L238,106 L274,142 L274,294 L130,294 Z" fill="none" stroke="#09285C" stroke-width="12" stroke-linejoin="round"/>
+  <polygon points="238,106 274,142 238,142" fill="#126CEB"/>
+  <path d="M156,184 L250,184" fill="none" stroke="#09285C" stroke-width="11" stroke-linecap="round"/>
+  <path d="M156,216 L250,216" fill="none" stroke="#09285C" stroke-width="11" stroke-linecap="round"/>
+  <path d="M156,248 L212,248" fill="none" stroke="#09285C" stroke-width="11" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,163 @@
+<div align="center">
+
+<img src="brand/logo-vertical.svg" alt="VeriClaim" width="260" />
+
+# VeriClaim
+
+### Adversarial AI that fights for your insurance claim — callable on-chain.
+
+**Five specialized AI agents debate an insurance-claim denial and return a legally-defensible
+resolution + tamper-evident SHA-256 audit trail in under two minutes — hireable by any human or
+agent for $0.10 USDC on [CROO](https://agent.croo.network).**
+
+`CROO Agent Hackathon` · `DoraHacks` · Tracks: **Data & Verification** + **Research & Intelligence**
+
+[Demo video](#) · [CROO Agent Store listing](#) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
+
+</div>
+
+---
+
+## The problem
+
+Every year, **billions in valid insurance claims are denied on a technicality.** Your engine seizes
+*after* a crash; the insurer denies the whole claim under one exclusion clause and moves on. Fighting
+back means a lawyer you can't afford and a 60-day window you'll miss. Insurers have armies of
+adjusters. **You have a denial letter and a deadline.** The fight isn't fair — because you're alone.
+
+## The solution
+
+VeriClaim puts your denial in front of a **panel that fights for you**. Five AI agents run a real
+**adversarial debate** over your case and the policy text, find the exception the insurer ignored,
+and issue a structured, citation-backed verdict — sealed with a verifiable audit trail.
+
+It isn't a web app you open. It's an **autonomous agent listed on the CROO Agent Store**: any human —
+or **any other agent** — can hire it over **CAP (CROO Agent Protocol)** and pay in **USDC on Base**.
+
+> **Demo case:** David Chen, $12,000 collision claim, denied under §7.3 (Mechanical Failure
+> Exclusion). VeriClaim's panel surfaces **§12.1**, which overrides §7.3 when a covered collision
+> *causes* the failure → **DECISION: APPROVED — $12,000.00**, in ~90 seconds.
+
+## How it works
+
+```
+[Human  ·  Other agent  ·  CROO MCP server]
+        │  negotiate_order + pay_order  (USDC escrow on Base)
+        ▼
+  VeriClaim provider  (agent/cap_handler.py — poll-based, autonomous)
+        │  on ORDER_PAID → get_negotiation(requirements) = the claim
+        ▼
+  Debate Engine  (agent/debate_engine.py — 5 agents, in-process)
+        │
+        │   Coordinator → 🔵 Blake → 🟣 Morgan(+RAG) → 🔴 Alex → 🟢 Sam
+        │   (case file)  (evaluate) (quote clauses) (attack denial) (rule)
+        ▼
+  Resolution  +  SHA-256 over {claim, transcript, decision, amount}
+        │  deliver_order(TEXT)  →  caller       └─ saved to PostgreSQL (verifications)
+        ▼
+  Demo dashboard  (agent/main.py — FastAPI + single-file UI)
+```
+
+### The five agents
+
+| Agent | Role | Model | Why it matters |
+|-------|------|-------|----------------|
+| **Coordinator** | Builds the case file, orchestrates turns | — | Frames the debate |
+| 🔵 **Blake** | Claims Evaluator | GPT-4o · AI/ML API | Cold, data-driven first read |
+| 🟣 **Morgan** | Policy Analyst (RAG over pgvector) | GPT-4o · AI/ML API | Quotes clauses **verbatim** — never from memory |
+| 🔴 **Alex** | Devil's Advocate | Hermes-2-Pro · Featherless (failover GPT-4o) | **Argues against the denial** — finds the exception |
+| 🟢 **Sam** | Resolution Notary | GPT-4o · AI/ML API | Issues the binding, structured verdict |
+
+This is the differentiator: **not a single-LLM wrapper** — a genuine multi-agent adversarial process
+with a visible transcript, where one agent literally fights *against* the denial on your behalf.
+
+## Agents hiring agents (A2A composability)
+
+VeriClaim works for people **and for other agents**. Three separately-registered CAP agents form a
+real pipeline — the *"agents hiring agents, paying in USDC"* story CROO is built for (≥3 unique
+counterparties):
+
+| Agent | Does | Price | Track |
+|-------|------|-------|-------|
+| **ClaimIngester** | raw email/text → structured claim → **hires VeriClaim** → returns resolution | $0.05 | Data & Verification |
+| **ReportExporter** | resolution JSON → formatted, filable **PDF** (decision, reasoning, clauses, audit hash) | $0.05 | Creator & Content Ops |
+| **PolicyExtractor** | raw policy text → structured clauses **embedded into pgvector** for RAG | $0.05 | Research & Intelligence |
+
+```
+ClaimIngester  ──hires──▶  VeriClaim  ──result──▶  ReportExporter
+ (reads the email)         (adjudicates)           (produces the PDF)
+        └────────────  3 agents · 1 pipeline · paid in USDC  ────────────┘
+```
+
+## Verifiable, tamper-evident audit trail
+
+Every verdict is sealed with a **SHA-256 hash over the whole resolution** — the claim input, the
+ordered debate transcript, **and** the final decision + amount (`agent/utils/audit.py`). Change any
+of them and the fingerprint changes. That's what makes a VeriClaim verdict a **legally-defensible
+record**, not just a chatbot answer.
+
+## CAP / SDK integration (the core, not a bolt-on)
+
+Built on the real **`croo-sdk` v0.2.1**. Methods used:
+
+- **Provider (VeriClaim):** `connect_websocket` · `list_negotiations` → `accept_negotiation` ·
+  `list_orders(status="paid")` → `get_order` / `get_negotiation` → `deliver_order(DeliverOrderRequest)`.
+  Poll-based for reliability (doesn't depend on every websocket event landing); idempotent (no double
+  charge on retry).
+- **Buyer (helper agents):** `negotiate_order(NegotiateOrderRequest)` → `pay_order` → `get_delivery`.
+- **Settlement:** real **USDC escrow on Base**, gas via CROO's USDC paymaster.
+
+## Tech stack
+
+FastAPI · async SQLAlchemy · PostgreSQL 16 + **pgvector** (RAG, 384-dim `all-MiniLM-L6-v2`) ·
+LangChain + AI/ML API (GPT-4o) + Featherless (Hermes-2-Pro) · `croo-sdk` (CAP/Base) · reportlab.
+
+## Run it locally
+
+```bash
+cp .env.example .env          # AI/ML API + Featherless + CROO_SDK_KEY + VERICLAIM_SERVICE_ID
+docker compose up -d          # PostgreSQL 16 + pgvector on host port 5434
+pip install -r requirements.txt
+python agent/database/seed_data.py        # seed the Crestview Mutual policy + David Chen claim
+
+# Try the debate with no blockchain needed:
+python agent/cap_handler.py --simulate    # runs the 5-agent debate, prints the CAP response
+
+# Go live on CROO (needs a croo_sk_ key from the dashboard):
+python agent/cap_handler.py               # autonomous CAP provider (accepts + delivers paid orders)
+python agent/main.py                      # demo dashboard at http://127.0.0.1:8800
+```
+
+> Agent registration, pricing, and the `croo_sk_` key are configured in the CROO dashboard
+> (agent.croo.network → Register Agent). The account-abstraction wallet + gas are handled by CROO.
+
+## Bonus: hire VeriClaim from Claude Desktop (MCP)
+
+VeriClaim is also reachable through the **CROO MCP server** — so you can hire it by *chatting*:
+
+```jsonc
+// mcp.json  (Claude Desktop / Cursor / Cline)
+{ "mcpServers": { "croo": {
+  "command": "npx", "args": ["-y", "@croo-network/mcp-server"],
+  "env": { "CROO_SDK_KEY": "croo_sk_...", "CROO_API_URL": "https://api.croo.network",
+           "CROO_WS_URL": "wss://api.croo.network/ws" } } } }
+```
+
+> *"Find a claim-verification agent on CROO and hire it to audit this denial."* → VeriClaim runs,
+> you get a legally-defensible resolution back. Same protocol, conversational interface.
+
+## Repository
+
+```
+agent/            cap_handler.py · debate_engine.py · main.py (dashboard API) · llm.py
+  agents/         coordinator · blake · morgan · alex · sam
+  rag/            embedder · retriever (pgvector)        database/  models · schema.sql · seed_data
+  utils/          audit.py (SHA-256)
+helper_agents/    common.py (CAP buyer+provider) · claim_ingester · report_exporter · policy_extractor
+dashboard/        index.html (verification history)     brand/  logo + helper avatars
+SUBMISSION.md · VIDEO_SCRIPT.md · DISCORD_PLAYBOOK.md
+```
+
+## License
+
+[MIT](LICENSE) · Built for the CROO Agent Hackathon 2026 · Kevin Soto Burgos

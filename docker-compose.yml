@@ -1,0 +1,26 @@
+# VeriClaim local PostgreSQL 16 + pgvector.
+# Host port 5434 + DB name `vericlaim` so it runs side-by-side with Recourse (which uses 5433).
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: vericlaim-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: vericlaim
+    ports:
+      # Host 5434 to avoid clashing with Recourse (5433) and a native PostgreSQL (5432).
+      - "5434:5432"
+    volumes:
+      - vericlaim_pgdata:/var/lib/postgresql/data
+      # schema.sql runs automatically on first boot of a fresh volume
+      - ./agent/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vericlaim"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  vericlaim_pgdata:

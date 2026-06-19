@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="PolicyExtractor">
+  <rect width="400" height="400" fill="#FFFFFF"/>
+  <rect x="116" y="108" width="142" height="184" rx="12" fill="none" stroke="#09285C" stroke-width="12"/>
+  <path d="M140,150 L234,150" fill="none" stroke="#09285C" stroke-width="11" stroke-linecap="round"/>
+  <path d="M140,182 L234,182" fill="none" stroke="#09285C" stroke-width="11" stroke-linecap="round"/>
+  <path d="M140,214 L206,214" fill="none" stroke="#09285C" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="250" cy="240" r="42" fill="#FFFFFF" stroke="#126CEB" stroke-width="14"/>
+  <path d="M281,271 L306,296" fill="none" stroke="#126CEB" stroke-width="18" stroke-linecap="round"/>
+</svg>

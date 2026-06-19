@@ -1,0 +1,34 @@
+# VeriClaim — Python >=3.11. Install with: pip install -r requirements.txt  (uv recommended)
+#
+# Reuses Recourse's debate stack (LLMs + RAG + pgvector) but DROPS band-sdk —
+# external agent coordination is handled by CAP (croo-sdk) instead of Band.
+
+# --- CROO Agent Protocol (CAP) — external A2A coordination + USDC settlement ---
+croo-sdk                          # `from croo import AgentClient, Config, EventType`
+
+# --- LLMs (OpenAI-compatible: AI/ML API + Featherless), reused from Recourse ---
+langchain-openai>=1.3.0           # ChatOpenAI pointed at AI/ML API + Featherless
+
+# --- Web framework (health endpoint + demo dashboard API) ---
+fastapi>=0.115.6
+uvicorn[standard]>=0.34.0
+
+# --- Config / validation ---
+pydantic>=2.10.4
+pydantic-settings>=2.7.1
+python-dotenv>=1.0.1
+
+# --- Database (async PostgreSQL + pgvector) ---
+sqlalchemy[asyncio]>=2.0.36
+asyncpg>=0.30.0
+pgvector>=0.3.6
+greenlet>=3.1.1
+
+# --- Embeddings / RAG (all-MiniLM-L6-v2, 384 dims) ---
+sentence-transformers>=3.3.1
+
+# --- HTTP client (Featherless prewarm, helper-agent calls) ---
+httpx>=0.28.1
+
+# --- Helper agent: ReportExporter (PDF generation) ---
+reportlab>=4.2.5

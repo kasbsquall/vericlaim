@@ -1,0 +1,20 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Embedding model cache
+.cache/
+
+# Generated PDFs (ReportExporter output)
+out/
+*.generated.pdf
+
+# OS
+.DS_Store
+Thumbs.db

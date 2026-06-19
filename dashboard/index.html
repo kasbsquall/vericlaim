@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VeriClaim — Verifications</title>
+<style>
+  :root {
+    --navy: #09285C; --blue: #126CEB; --ink: #0E1A24;
+    --bg: #F4F7FB; --surface: #FFFFFF; --line: #E3E9F2;
+    --muted: #64748B; --green: #16A34A; --green-bg: #E7F6EC;
+    --red: #DC2626; --red-bg: #FCEBEB; --amber: #B45309; --amber-bg: #FBF1E0;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 64px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap; margin-bottom: 26px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand h1 { font-family: Poppins, sans-serif; font-weight: 700; font-size: 30px;
+    letter-spacing: -.5px; margin: 0; }
+  .brand h1 .b { color: var(--blue); } .brand h1 .n { color: var(--navy); }
+  .brand p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .price { background: var(--navy); color: #fff; border-radius: 999px; padding: 9px 16px;
+    font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+  .price small { opacity: .7; font-weight: 500; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 26px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .stat .k { color: var(--muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
+  .stat .v { font-family: Poppins, sans-serif; font-weight: 600; font-size: 26px; color: var(--navy); margin-top: 4px; }
+  .stat .v.blue { color: var(--blue); }
+  .sec { font-weight: 600; font-size: 14px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: .5px; margin: 0 4px 12px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 18px 20px; margin-bottom: 14px; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+  .card:hover { border-color: #C9D6EA; box-shadow: 0 6px 22px rgba(9,40,92,.06); }
+  .row1 { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .badge { font-weight: 700; font-size: 12.5px; padding: 5px 11px; border-radius: 999px; letter-spacing: .3px; }
+  .APPROVED { color: var(--green); background: var(--green-bg); }
+  .DENIED { color: var(--red); background: var(--red-bg); }
+  .PARTIAL { color: var(--amber); background: var(--amber-bg); }
+  .UNCLEAR { color: var(--muted); background: #EEF2F7; }
+  .claimid { font-family: Poppins, sans-serif; font-weight: 600; font-size: 16px; color: var(--navy); }
+  .amount { margin-left: auto; font-family: Poppins, sans-serif; font-weight: 700; font-size: 18px; color: var(--ink); }
+  .meta { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; color: var(--muted); font-size: 13px; }
+  .meta b { color: var(--ink); font-weight: 600; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .chip { font-size: 12px; font-weight: 600; color: var(--blue); background: #EAF2FE;
+    border-radius: 7px; padding: 3px 9px; }
+  .hash { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11.5px;
+    color: var(--muted); margin-top: 12px; word-break: break-all; }
+  .hash b { color: var(--navy); }
+  .detail { display: none; margin-top: 16px; border-top: 1px dashed var(--line); padding-top: 14px; }
+  .card.open .detail { display: block; }
+  .turn { margin-bottom: 12px; }
+  .turn .who { font-family: Poppins, sans-serif; font-weight: 600; font-size: 13px; color: var(--blue); margin-bottom: 3px; }
+  .turn .txt { font-size: 13.5px; line-height: 1.6; color: #2A3744; white-space: pre-wrap; }
+  .turn.coordinator .who { color: var(--muted); }
+  .empty { text-align: center; color: var(--muted); padding: 60px 0; }
+  .empty .ico { font-size: 40px; }
+  @media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg width="40" height="44" viewBox="0 0 240 260" aria-hidden="true">
+        <path d="M55,66 Q120,80 185,66 L187,150 Q187,206 120,243 Q53,206 53,150 L55,66 Z"
+          fill="none" stroke="#09285C" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/>
+        <path d="M76,150 L112,186 L196,90" fill="none" stroke="#126CEB" stroke-width="22"
+          stroke-linejoin="round" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1><span class="n">Veri</span><span class="b">Claim</span></h1>
+        <p>Adversarial insurance claim audit · on CROO</p>
+      </div>
+    </div>
+    <div class="price">$0.10 USDC <small>/ audit</small></div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+  <div class="sec">Verifications</div>
+  <div id="list"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (t) => (t ?? "").replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const short = (w) => (w && w.length > 14 ? w.slice(0, 8) + "…" + w.slice(-4) : w || "—");
+const when = (iso) => { if (!iso) return "—"; const d = new Date(iso);
+  return d.toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }); };
+
+function stat(k, v, blue) { return `<div class="stat"><div class="k">${k}</div><div class="v ${blue ? "blue" : ""}">${v}</div></div>`; }
+
+function renderStats(rows) {
+  const done = rows.filter((r) => r.status === "completed");
+  const approved = rows.filter((r) => r.decision === "APPROVED").length;
+  const usdc = rows.reduce((s, r) => s + (r.payment_usdc || 0), 0);
+  $("#stats").innerHTML =
+    stat("Total audits", rows.length) +
+    stat("Approved", approved, true) +
+    stat("Completed", done.length) +
+    stat("USDC earned", "$" + usdc.toFixed(2), true);
+}
+
+function card(r) {
+  const dec = r.decision || "UNCLEAR";
+  const amt = r.approved_amount != null ? "$" + Number(r.approved_amount).toLocaleString(undefined, { minimumFractionDigits: 2 }) : "";
+  const chips = (r.cited_clauses || []).map((c) => `<span class="chip">${esc(c)}</span>`).join("");
+  const turns = (r.transcript || []).map((t) =>
+    `<div class="turn ${esc(t.slug)}"><div class="who">${esc(t.agent)}</div><div class="txt">${esc(t.content)}</div></div>`).join("");
+  return `<div class="card" onclick="this.classList.toggle('open')">
+    <div class="row1">
+      <span class="badge ${dec}">${dec}</span>
+      <span class="claimid">${esc(r.cap_call_id || "—")}</span>
+      ${amt ? `<span class="amount">${amt}</span>` : ""}
+    </div>
+    <div class="meta">
+      <span>Caller <b>${short(r.caller_wallet)}</b></span>
+      <span>Paid <b>$${(r.payment_usdc || 0).toFixed(2)}</b></span>
+      <span>Panel <b>${(r.agents_involved || []).join(", ") || "—"}</b></span>
+      <span>${when(r.created_at)}</span>
+    </div>
+    ${chips ? `<div class="chips">${chips}</div>` : ""}
+    <div class="hash"><b>SHA-256</b> ${esc(r.audit_hash || "—")}</div>
+    <div class="detail">${turns || "<i>No transcript.</i>"}</div>
+  </div>`;
+}
+
+async function load() {
+  try {
+    const rows = await (await fetch("/api/verifications")).json();
+    renderStats(rows);
+    $("#list").innerHTML = rows.length
+      ? rows.map(card).join("")
+      : `<div class="empty"><div class="ico">🛡️</div><p>No verifications yet. Hire VeriClaim over CAP to run the first audit.</p></div>`;
+  } catch (e) {
+    $("#list").innerHTML = `<div class="empty"><p>Could not load verifications. Is the API running?</p></div>`;
+  }
+}
+load();
+</script>
+</body>
+</html>
