@@ -7,6 +7,10 @@ Tone: cinematic, confident, a little defiant ("the little guy finally has levera
 
 > Legend — **[VO]** = voiceover narration · **[SCREEN]** = what's on screen · **[TEXT]** = on-screen caption · **[SFX/MUSIC]** = audio.
 
+> 🎙️ **The audio is already produced** → `vericlaim-video/final_audio.mp3` (~82s: an ElevenLabs "George" voiceover + a subtle music bed at ~16%, pre-mixed with fades). Lay it on your timeline and **record the visuals below to match it.** Master narration text: `vericlaim-video/narration.txt`.
+>
+> ⚡ **Updated for the 6th agent (Quinn):** the panel **adapts** — 5 agents on a normal case, **6 when fraud is alleged** (Quinn, the SIU investigator). The audio already includes this beat; showcase it with the Lisa Park fraud case.
+
 ---
 
 ### 0:00–0:15 — THE COLD OPEN (the pain)
@@ -27,14 +31,19 @@ Tone: cinematic, confident, a little defiant ("the little guy finally has levera
 - **[MUSIC]** Shift to hopeful, driving.
 
 ### 0:42–1:15 — THE PRODUCT (the wow: the debate) — REAL CAPTURE
-- **[SCREEN]** Screen-record the **real debate** (run it live or use the dashboard transcript). Show the 5 agents speaking in sequence, with name labels:
+- **[SCREEN]** Screen-record the **real debate** (run it live: `python helper_agents/pipeline_demo.py`, or use the dashboard transcript). Show the agents speaking in sequence, with name labels:
   - 🔵 **Blake** (Claims Evaluator) — flags §7.3.
   - 🟣 **Morgan** (Policy Analyst) — quotes §12.1 *verbatim* from the policy.
   - 🔴 **Alex** (Devil's Advocate) — "Wait —" attacks the denial, weaponizes the mechanic report.
   - 🟢 **Sam** (Resolution Notary) — issues the ruling.
-- **[VO]** "Five specialized AI agents debate your case — adversarially. One quotes the policy word for word. One attacks the denial on your behalf. They find the exception the insurer ignored: clause §12.1, which overrides §7.3 when a collision causes the failure."
+- **[VO]** "Five specialized AI agents debate your case — adversarially. One quotes the policy word for word. One attacks the denial on your behalf. They find the exception the insurer ignored."
 - **[TEXT]** as Sam rules: **"DECISION: APPROVED — $12,000.00"** then **"Cited: §12.1 overrides §7.3"**.
 - **[MUSIC]** Hits a confident peak on "APPROVED."
+
+### 1:00–1:12 — ⚡ THE 6th AGENT (Quinn — the differentiator) — REAL CAPTURE
+- **[SCREEN]** Cut to the **Lisa Park** fraud case (run `pipeline_demo` with `sample_claim_fraud.json`). Show the panel grow **5 → 6**: a new card lights up — 🟪 **Quinn, SIU** — recruited mid-debate to investigate the fraud allegation, which the evidence doesn't support.
+- **[VO]** "And when a claim is denied on suspicion of fraud, a sixth investigator is recruited — to test whether that accusation actually holds up."
+- **[TEXT]** "The panel adapts. A 6th agent — Quinn (SIU) — joins only when fraud is alleged."
 
 ### 1:15–1:35 — THE PROOF (verifiable + real money) — REAL CAPTURE
 - **[SCREEN]** Show the **SHA-256 audit hash** on the dashboard card, then the **on-chain transaction** (BaseScan tx for the USDC payment / the CROO order page showing PAID).
