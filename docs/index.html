@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VeriClaim — Adversarial AI that fights for your insurance claim</title>
+<meta name="description" content="Five AI agents debate an insurance-claim denial (a sixth joins when fraud is alleged) and return a legally-defensible verdict + SHA-256 audit trail. Callable on-chain via CROO for $0.10 USDC." />
+<meta property="og:title" content="VeriClaim — Adversarial AI for insurance claims" />
+<meta property="og:description" content="A 6-agent AI panel audits your denial and returns a legally-defensible verdict + SHA-256 audit, on-chain via CROO." />
+<meta property="og:image" content="assets/verdict.jpg" />
+<link rel="icon" href="assets/shield.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0A1626; --ink2:#07101C; --blue:#2E7FF5; --blue2:#126CEB; --navy:#09285C;
+    --txt:#E9EFF8; --muted:#93A6BE; --line:rgba(255,255,255,.09); --card:rgba(255,255,255,.04);
+    --green:#34D399; --red:#F26d6d; --amber:#F5C451;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--txt);font-family:Inter,system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3{font-family:Poppins,sans-serif;line-height:1.12;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .accent{color:var(--blue)}
+  .muted{color:var(--muted)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:13px 22px;border-radius:12px;transition:transform .15s,box-shadow .15s,background .15s}
+  .btn-primary{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;box-shadow:0 8px 30px rgba(46,127,245,.35)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 38px rgba(46,127,245,.5)}
+  .btn-ghost{border:1px solid var(--line);color:var(--txt)}
+  .btn-ghost:hover{background:rgba(255,255,255,.06)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;background:rgba(10,22,38,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .logo{display:flex;align-items:center;gap:10px;font-family:Poppins,sans-serif;font-weight:700;font-size:21px;letter-spacing:-.02em}
+  .logo .n{color:#fff}.logo .b{color:var(--blue)}
+  .navlinks{display:flex;align-items:center;gap:28px;font-size:14.5px}
+  .navlinks a{color:var(--muted);font-weight:500}.navlinks a:hover{color:var(--txt)}
+  @media(max-width:760px){.navlinks .lnk{display:none}}
+
+  /* hero */
+  .hero{position:relative;min-height:88vh;display:flex;align-items:center;background:#06101c}
+  .hero .bg{position:absolute;inset:0;background:url('assets/hero.jpg') center right/cover no-repeat;opacity:.95}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,16,28,.97) 0%,rgba(6,16,28,.86) 38%,rgba(6,16,28,.25) 70%,rgba(6,16,28,.55) 100%)}
+  .hero .wrap{position:relative;z-index:2;padding-top:70px;padding-bottom:70px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--blue);background:rgba(46,127,245,.12);border:1px solid rgba(46,127,245,.3);padding:6px 13px;border-radius:999px;margin-bottom:22px}
+  .hero h1{font-size:clamp(34px,5.6vw,62px);font-weight:800;max-width:15ch}
+  .hero h1 em{font-style:normal;color:var(--blue)}
+  .hero p.sub{font-size:clamp(16px,2vw,20px);color:#C6D3E4;max-width:46ch;margin:22px 0 32px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .price-pill{display:inline-flex;align-items:center;gap:8px;margin-top:26px;color:var(--muted);font-size:14px}
+  .price-pill b{color:var(--txt)}
+
+  /* sections */
+  section.pad{padding:96px 0}
+  .center{text-align:center}
+  .kicker{color:var(--blue);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+  h2{font-size:clamp(28px,3.6vw,42px);font-weight:700;margin:12px 0}
+  .lead{color:var(--muted);font-size:18px;max-width:62ch;margin:0 auto}
+
+  /* problem */
+  .prob{background:var(--ink2)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:28px}
+  .stat .big{font-family:Poppins;font-weight:700;font-size:34px;color:#fff}
+  .stat .big.red{color:var(--red)}.stat .big.blue{color:var(--blue)}
+  .stat p{color:var(--muted);margin-top:6px;font-size:15px}
+  @media(max-width:760px){.stats{grid-template-columns:1fr}}
+
+  /* agents */
+  .agents{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+  .agent{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;transition:border-color .2s,transform .2s}
+  .agent:hover{border-color:rgba(46,127,245,.45);transform:translateY(-3px)}
+  .agent .dot{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-family:Poppins;margin-bottom:14px}
+  .agent h3{font-size:18px;font-weight:600}
+  .agent .role{color:var(--blue);font-size:13px;font-weight:600;margin:2px 0 10px}
+  .agent p{color:var(--muted);font-size:14.5px}
+  .agent.dyn{border-color:rgba(245,196,81,.4);background:linear-gradient(180deg,rgba(245,196,81,.06),var(--card))}
+  .agent.dyn .role{color:var(--amber)}
+  @media(max-width:760px){.agents{grid-template-columns:1fr}}
+
+  /* flow */
+  .flow{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:44px}
+  .node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-weight:600;font-size:14.5px}
+  .node small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
+  .arrow{color:var(--blue);font-size:22px}
+
+  /* split (verdict / pipeline) */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+  .split img{width:100%;border-radius:18px;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .split h2{text-align:left}.split .kicker{display:block}
+  .feat{display:flex;gap:12px;margin-top:16px}
+  .feat .ic{color:var(--blue);font-weight:700;flex:none}
+  .feat b{color:var(--txt)} .feat span{color:var(--muted);font-size:15px}
+  @media(max-width:860px){.split{grid-template-columns:1fr;gap:30px}.split.rev .txt{order:2}}
+
+  /* cta band */
+  .cta-band{position:relative;text-align:center;padding:110px 0;background:radial-gradient(900px 400px at 50% 0%,rgba(46,127,245,.16),transparent),var(--ink2);overflow:hidden}
+  .cta-band img.sh{width:120px;margin-bottom:18px;filter:drop-shadow(0 10px 40px rgba(46,127,245,.5))}
+  .cta-band h2{font-size:clamp(30px,4vw,46px)}
+  .cta-band .lead{margin:16px auto 30px}
+
+  footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted);font-size:14px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  footer a{color:var(--muted)}footer a:hover{color:var(--txt)}
+  .flinks{display:flex;gap:22px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="logo" href="#top">
+    <svg width="26" height="29" viewBox="0 0 240 260" aria-hidden="true"><path d="M55,66 Q120,80 185,66 L187,150 Q187,206 120,243 Q53,206 53,150 L55,66 Z" fill="none" stroke="#2E7FF5" stroke-width="15" stroke-linejoin="round"/><path d="M76,150 L112,186 L196,90" fill="none" stroke="#fff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span><span class="n">Veri</span><span class="b">Claim</span></span>
+  </a>
+  <div class="navlinks">
+    <a class="lnk" href="#how">How it works</a>
+    <a class="lnk" href="#pipeline">A2A pipeline</a>
+    <a class="lnk" href="#audit">Audit trail</a>
+    <a class="btn btn-primary" href="https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231" target="_blank" rel="noopener" style="padding:9px 16px">Hire on CROO</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="bg"></div><div class="scrim"></div>
+  <div class="wrap">
+    <span class="eyebrow">⚡ Adversarial multi-agent AI · on-chain via CROO</span>
+    <h1>Adversarial AI that <em>fights for</em> your insurance claim.</h1>
+    <p class="sub">Your claim was denied on a technicality. VeriClaim puts it in front of a panel of AI agents that debate the case, find the exception the insurer ignored, and return a legally-defensible verdict — in under two minutes.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231" target="_blank" rel="noopener">Hire VeriClaim — $0.10 USDC →</a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+    <div class="price-pill">🛡️ <b>5 agents debate every claim</b> — a 6th joins when fraud is alleged. Sealed with a <b>SHA-256 audit trail.</b></div>
+  </div>
+</header>
+
+<section class="pad prob center">
+  <div class="wrap">
+    <span class="kicker">The problem</span>
+    <h2>Insurers have armies of adjusters.<br/>You have a denial letter and a deadline.</h2>
+    <p class="lead">Every year, billions in valid claims are denied on a single exclusion clause. Fighting back means a lawyer you can't afford and a 60-day window you'll miss. The fight isn't fair — because you're fighting it alone.</p>
+    <div class="stats">
+      <div class="stat"><div class="big red">~1 in 5</div><p>health & auto claims are initially denied — many on technicalities, not facts.</p></div>
+      <div class="stat"><div class="big">&lt; 1%</div><p>of denied claimants ever formally appeal. The rest just give up.</p></div>
+      <div class="stat"><div class="big blue">$0.10</div><p>what a full adversarial VeriClaim audit costs — in USDC, in ~90 seconds.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad center" id="how">
+  <div class="wrap">
+    <span class="kicker">How it works</span>
+    <h2>A panel that adapts to the case</h2>
+    <p class="lead">Not a single-LLM wrapper — a genuine adversarial debate, where one agent literally argues <em>against</em> the denial on your behalf. Five specialists run every case; a sixth is recruited the moment fraud is alleged.</p>
+    <div class="agents">
+      <div class="agent"><div class="dot" style="background:#475569">C</div><h3>Coordinator</h3><div class="role">Orchestrator</div><p>Builds the case file from your claim + policy and runs the debate.</p></div>
+      <div class="agent"><div class="dot" style="background:#2E7FF5">B</div><h3>Blake</h3><div class="role">Claims Evaluator</div><p>Cold, data-driven first read — coverage, limits, deductible, exclusions.</p></div>
+      <div class="agent"><div class="dot" style="background:#8B5CF6">M</div><h3>Morgan</h3><div class="role">Policy Analyst · RAG</div><p>Quotes the policy clauses <b>verbatim</b> — never from memory.</p></div>
+      <div class="agent"><div class="dot" style="background:#EF4444">A</div><h3>Alex</h3><div class="role">Devil's Advocate</div><p><b>Argues against the denial</b> — surfaces the exception the insurer ignored.</p></div>
+      <div class="agent dyn"><div class="dot" style="background:#F5C451;color:#3a2c00">Q</div><h3>Quinn ⚡</h3><div class="role">SIU · recruited on fraud</div><p>The <b>dynamic 6th agent</b> — tests whether a fraud allegation actually holds up.</p></div>
+      <div class="agent"><div class="dot" style="background:#34D399;color:#053">S</div><h3>Sam</h3><div class="role">Resolution Notary</div><p>Weighs the full debate and issues the binding, structured verdict.</p></div>
+    </div>
+    <div class="flow">
+      <div class="node">Blake<small>evaluate</small></div><span class="arrow">→</span>
+      <div class="node">Morgan<small>quote clauses</small></div><span class="arrow">→</span>
+      <div class="node">Alex<small>attack denial</small></div><span class="arrow">→</span>
+      <div class="node" style="border-color:rgba(245,196,81,.4)">Quinn<small>if fraud alleged</small></div><span class="arrow">→</span>
+      <div class="node">Sam<small>rule</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad" id="audit" style="background:var(--ink2)">
+  <div class="wrap split rev">
+    <div class="txt">
+      <span class="kicker">Verifiable & tamper-evident</span>
+      <h2>A verdict you can defend.</h2>
+      <p class="muted" style="margin-top:10px">Every resolution is sealed with a <b style="color:var(--txt)">SHA-256 hash over the whole record</b> — the claim, the full debate transcript, and the final decision + amount. Change any of it and the fingerprint breaks. That's what makes a VeriClaim verdict a legally-defensible record, not just a chatbot answer.</p>
+      <div class="feat"><span class="ic">✓</span><span><b>Decision + payable amount</b> — APPROVED / DENIED / PARTIAL, with the math.</span></div>
+      <div class="feat"><span class="ic">✓</span><span><b>Cited policy clauses</b> — the exclusion invoked and the exception that overrides it.</span></div>
+      <div class="feat"><span class="ic">✓</span><span><b>SHA-256 audit hash</b> — a portable, tamper-evident fingerprint of the resolution.</span></div>
+    </div>
+    <img src="assets/verdict.jpg" alt="A sealed verdict with a glowing checkmark and cryptographic audit hash" />
+  </div>
+</section>
+
+<section class="pad" id="pipeline">
+  <div class="wrap split">
+    <div class="txt">
+      <span class="kicker">Agents hiring agents (A2A)</span>
+      <h2>Built for the agent economy.</h2>
+      <p class="muted" style="margin-top:10px">VeriClaim works for people <b style="color:var(--txt)">and for other agents</b>. Over CROO's CAP protocol, agents discover, hire and pay each other in USDC — a real autonomous pipeline:</p>
+      <div class="flow" style="justify-content:flex-start;margin-top:22px">
+        <div class="node">ClaimIngester<small>reads the email</small></div><span class="arrow">→</span>
+        <div class="node" style="border-color:rgba(46,127,245,.5)">VeriClaim<small>adjudicates</small></div><span class="arrow">→</span>
+        <div class="node">ReportExporter<small>files the PDF</small></div>
+      </div>
+      <p class="muted" style="margin-top:22px">One agent reads the insured's raw email, hires VeriClaim to rule on it, and a third turns the verdict into a filable PDF. <b style="color:var(--txt)">Three agents, one pipeline, settled in USDC on Base.</b></p>
+    </div>
+    <img src="assets/shield.png" alt="VeriClaim aegis shield" style="border:none;box-shadow:none;max-width:340px;margin:0 auto;display:block;filter:drop-shadow(0 20px 60px rgba(46,127,245,.4))" />
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <img class="sh" src="assets/shield.png" alt="" />
+    <h2>Put your denial in front of the panel.</h2>
+    <p class="lead">Insurers have a panel. Now, so do you. Hire VeriClaim on the CROO Agent Store — for any human or agent, in USDC.</p>
+    <a class="btn btn-primary" href="https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231" target="_blank" rel="noopener" style="font-size:16px;padding:15px 28px">Hire VeriClaim — $0.10 USDC →</a>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <div>© 2026 VeriClaim · MIT · Built for the CROO Agent Hackathon</div>
+  <div class="flinks">
+    <a href="https://github.com/kasbsquall/vericlaim" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231" target="_blank" rel="noopener">CROO Store</a>
+    <a href="https://agent.croo.network" target="_blank" rel="noopener">CROO</a>
+  </div>
+</div></footer>
+
+</body>
+</html>
