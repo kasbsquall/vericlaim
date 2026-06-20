@@ -33,7 +33,7 @@
   .sec { font-weight: 600; font-size: 14px; color: var(--muted); text-transform: uppercase;
     letter-spacing: .5px; margin: 0 4px 12px; }
   .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
-    padding: 18px 20px; margin-bottom: 14px; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+    padding: 18px 20px; margin-bottom: 14px; transition: border-color .15s, box-shadow .15s; }
   .card:hover { border-color: #C9D6EA; box-shadow: 0 6px 22px rgba(9,40,92,.06); }
   .row1 { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   .badge { font-weight: 700; font-size: 12.5px; padding: 5px 11px; border-radius: 999px; letter-spacing: .3px; }
@@ -109,9 +109,7 @@ function card(r) {
   const dec = r.decision || "UNCLEAR";
   const amt = r.approved_amount != null ? "$" + Number(r.approved_amount).toLocaleString(undefined, { minimumFractionDigits: 2 }) : "";
   const chips = (r.cited_clauses || []).map((c) => `<span class="chip">${esc(c)}</span>`).join("");
-  const turns = (r.transcript || []).map((t) =>
-    `<div class="turn ${esc(t.slug)}"><div class="who">${esc(t.agent)}</div><div class="txt">${esc(t.content)}</div></div>`).join("");
-  return `<div class="card" onclick="this.classList.toggle('open')">
+  return `<div class="card">
     <div class="row1">
       <span class="badge ${dec}">${dec}</span>
       <span class="claimid">${esc(r.cap_call_id || "—")}</span>
@@ -125,7 +123,6 @@ function card(r) {
     </div>
     ${chips ? `<div class="chips">${chips}</div>` : ""}
     <div class="hash"><b>SHA-256</b> ${esc(r.audit_hash || "—")}</div>
-    <div class="detail">${turns || "<i>No transcript.</i>"}</div>
   </div>`;
 }
 

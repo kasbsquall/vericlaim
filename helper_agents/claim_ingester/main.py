@@ -16,6 +16,7 @@ import logging
 import os
 import sys
 from pathlib import Path
+from uuid import uuid4
 
 VERICLAIM_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(VERICLAIM_ROOT))
@@ -71,9 +72,25 @@ This is a collision-caused failure. Please re-review the claim in full.
 — David Chen"""
 
 
+def _validate_claim(claim: dict) -> dict:
+    """Fail fast at the boundary: a malformed LLM parse must not silently degrade to a $0 verdict."""
+    if not isinstance(claim, dict):
+        raise ValueError("parsed claim is not a JSON object")
+    if not str(claim.get("claim_number") or "").strip():
+        raise ValueError("parsed claim is missing 'claim_number'")
+    try:
+        amount = float(claim.get("amount_requested") or 0)
+    except (TypeError, ValueError):
+        amount = 0.0
+    if amount <= 0:
+        raise ValueError("parsed claim has no positive 'amount_requested'")
+    return claim
+
+
 async def parse_claim(raw_text: str) -> dict:
-    """Raw dispute text -> structured claim JSON VeriClaim accepts."""
-    return await llm_json(PARSE_SYSTEM, f"Raw claim text:\n{raw_text}\n\nReturn the claim JSON.")
+    """Raw dispute text -> structured claim JSON VeriClaim accepts (validated)."""
+    claim = await llm_json(PARSE_SYSTEM, f"Raw claim text:\n{raw_text}\n\nReturn the claim JSON.")
+    return _validate_claim(claim)
 
 
 async def _verify_in_process(claim: dict) -> dict:
@@ -81,7 +98,9 @@ async def _verify_in_process(claim: dict) -> dict:
     sys.path.insert(0, str(VERICLAIM_ROOT / "agent"))
     from cap_handler import process_order  # noqa: PLC0415
 
-    return await process_order(claim, cap_call_id="INGESTER-SIM", caller_wallet="0xCLAIM_INGESTER")
+    return await process_order(
+        claim, cap_call_id=f"INGESTER-SIM-{uuid4().hex[:8]}", caller_wallet="0xCLAIM_INGESTER"
+    )
 
 
 async def _handler(requirements: dict) -> dict:

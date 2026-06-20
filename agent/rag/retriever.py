@@ -33,6 +33,15 @@ async def search_clauses(
     stmt = stmt.order_by(distance).limit(limit)
 
     rows = (await session.execute(stmt)).all()
+    if not rows and policy_type is not None:
+        # No clauses carry this exact policy_type label (e.g. clauses ingested by
+        # PolicyExtractor under a different label). Fall back to semantic search across
+        # all clauses so Morgan still gets grounded, verbatim text to cite.
+        rows = (
+            await session.execute(
+                select(PolicyClause, distance.label("distance")).order_by(distance).limit(limit)
+            )
+        ).all()
     return [
         {
             "clause_number": clause.clause_number,

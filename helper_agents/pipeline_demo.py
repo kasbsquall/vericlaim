@@ -15,6 +15,7 @@ from __future__ import annotations
 import asyncio
 import sys
 from pathlib import Path
+from uuid import uuid4
 
 # Windows consoles default to cp1252 and choke on the emoji/§ in the output — force UTF-8.
 if hasattr(sys.stdout, "reconfigure"):
@@ -41,9 +42,9 @@ async def main() -> None:
         f"${claim.get('amount_requested')} · denial: {str(claim.get('original_denial_reason'))[:60]}..."
     )
 
-    print("\n[2/3] 🛡️  VeriClaim — 5-agent adversarial debate (Blake → Morgan → Alex → Sam)...")
+    print("\n[2/3] 🛡️  VeriClaim — 5-agent adversarial debate (Coordinator → Blake → Morgan → Alex → Sam; +Quinn on fraud)...")
     resolution = await process_order(
-        claim, cap_call_id="PIPELINE-DEMO", caller_wallet="0xPIPELINE_DEMO"
+        claim, cap_call_id=f"PIPELINE-DEMO-{uuid4().hex[:8]}", caller_wallet="0xPIPELINE_DEMO"
     )
     print(
         f"      → DECISION: {resolution['decision']} · "

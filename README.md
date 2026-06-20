@@ -13,7 +13,8 @@ $0.10 USDC on [CROO](https://agent.croo.network).**
 
 `CROO Agent Hackathon` · `DoraHacks` · Tracks: **Data & Verification** + **Research & Intelligence**
 
-[Demo video](#) · [CROO Agent Store listing](#) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
+<!-- TODO(Kevin): replace the Demo video `#` with the YouTube URL once uploaded. -->
+[Demo video](#) · [Hire on CROO](https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
 
 </div>
 

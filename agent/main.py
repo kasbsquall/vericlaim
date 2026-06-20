@@ -31,6 +31,8 @@ def _num(value: Decimal | None) -> float | None:
 
 
 def _serialize(v: Verification) -> dict:
+    # Data minimization: the public feed exposes only audit metadata, never the full
+    # debate transcript or claim input (both carry claimant PII — names, incident details).
     transcript = v.debate_transcript or []
     agents = [t.get("agent") for t in transcript if t.get("slug") != "coordinator"]
     return {
@@ -43,7 +45,6 @@ def _serialize(v: Verification) -> dict:
         "audit_hash": v.audit_hash,
         "status": v.status,
         "agents_involved": agents,
-        "transcript": transcript,
         "created_at": v.created_at.isoformat() if v.created_at else None,
     }
 
