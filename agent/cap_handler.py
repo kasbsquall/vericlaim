@@ -119,15 +119,35 @@ async def _already_done(cap_call_id: str) -> bool:
 # The buyer sends the claim JSON as the negotiation's `requirements`. On ORDER_PAID we fetch the
 # order, then its negotiation, and parse requirements into the claim payload. (croo-sdk v0.2.1:
 # Order has no requirements field — Negotiation.requirements carries it.)
+_CLAIM_KEYS = ("claim_number", "policy", "amount_requested", "incident_type")
+_ENVELOPE_KEYS = ("text", "raw_text", "claim", "input", "data", "message", "requirements")
+
+
 def _parse_requirements(requirements: object) -> dict:
-    if isinstance(requirements, dict):
-        return requirements
-    try:
-        return json.loads(requirements)
-    except (TypeError, ValueError) as exc:
-        raise ValueError(
-            f"Negotiation requirements is not valid claim JSON: {requirements!r}"
-        ) from exc
+    # CROO may deliver the claim as a dict, a JSON string, OR wrapped in an envelope like
+    # {"text": "<claim json>"} (what the store's "Hire" box produces). Unwrap nested layers and
+    # parse down to the real claim dict, so the debate sees policy/amount — not {"text": ...},
+    # which would otherwise yield an empty claim -> DENIED $0.
+    claim: object = requirements
+    for _ in range(4):
+        if isinstance(claim, str):
+            try:
+                claim = json.loads(claim)
+                continue
+            except (TypeError, ValueError):
+                break
+        if isinstance(claim, dict):
+            if any(k in claim for k in _CLAIM_KEYS):
+                return claim
+            nested = next((claim[k] for k in _ENVELOPE_KEYS if k in claim), None)
+            if nested is None:
+                break
+            claim = nested
+            continue
+        break
+    raise ValueError(
+        f"Negotiation requirements is not valid claim JSON: {requirements!r}"
+    )
 
 
 _PROVIDER_POLL_SECONDS = 5
