@@ -13,8 +13,10 @@ $0.10 USDC on [CROO](https://agent.croo.network).**
 
 `CROO Agent Hackathon` · `DoraHacks` · Tracks: **Data & Verification** + **Research & Intelligence**
 
-<!-- TODO(Kevin): replace the Demo video `#` with the YouTube URL once uploaded. -->
-[Demo video](#) · [Hire on CROO](https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
+[▶ Demo video](https://youtu.be/KrCo8s55bXU) · [Hire on CROO](https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
+
+**🟢 Live & proven on-chain** — real CAP settlements on Base (escrow → deliver → USDC settled to the provider):
+[`0xe45cf4b8…`](https://basescan.org/tx/0xe45cf4b86e118cba78d65934486fbe779ed9d1869412967d93c40651ea7d0f1e) · [`0x0638213d…`](https://basescan.org/tx/0x0638213d0b93e7c63dedffb31051e85e2ed21450257953284154baeae29163d8)
 
 </div>
 
