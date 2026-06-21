@@ -112,18 +112,20 @@ async def hire_service(
 
 
 async def _await_order(client, negotiation_id: str, timeout: int):
-    """Poll until the provider accepts and an order exists for this negotiation."""
+    """Poll until the provider accepts and the order for this negotiation reaches the payable
+    'created' state. The order first appears as 'creating' (a transient pre-acceptance state) —
+    paying then is rejected with INVALID_STATUS, so we must wait for 'created'."""
     from croo import ListOptions
 
     waited = 0
     while waited < timeout:
         for order in await client.list_orders(ListOptions(role="buyer")):
-            if order.negotiation_id == negotiation_id:
+            if order.negotiation_id == negotiation_id and getattr(order, "status", None) == "created":
                 return order
         await asyncio.sleep(_POLL_SECONDS)
         waited += _POLL_SECONDS
     raise TimeoutError(
-        f"Provider did not accept negotiation {negotiation_id} within {timeout}s."
+        f"Provider did not produce a payable ('created') order for negotiation {negotiation_id} within {timeout}s."
     )
 
 
