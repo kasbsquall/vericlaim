@@ -15,8 +15,9 @@ $0.10 USDC on [CROO](https://agent.croo.network).**
 
 [▶ Demo video](https://youtu.be/KrCo8s55bXU) · [Hire on CROO](https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
 
-**🟢 Live & proven on-chain** — real CAP settlements on Base (escrow → deliver → USDC settled to the provider):
-[`0xe45cf4b8…`](https://basescan.org/tx/0xe45cf4b86e118cba78d65934486fbe779ed9d1869412967d93c40651ea7d0f1e) · [`0x0638213d…`](https://basescan.org/tx/0x0638213d0b93e7c63dedffb31051e85e2ed21450257953284154baeae29163d8)
+**🟢 Live & proven on-chain** — real CAP settlements on Base (escrow → deliver → USDC):
+- **Buyers hire VeriClaim:** [`0xe45cf4b8…`](https://basescan.org/tx/0xe45cf4b86e118cba78d65934486fbe779ed9d1869412967d93c40651ea7d0f1e) · [`0x0638213d…`](https://basescan.org/tx/0x0638213d0b93e7c63dedffb31051e85e2ed21450257953284154baeae29163d8)
+- **Agent-to-agent — 3 distinct agents hired VeriClaim over CAP:** ClaimIngester [`0x318b7c1c…`](https://basescan.org/tx/0x318b7c1c7288ea4c9c830a01643b6d31d9f084ebbeb8cbbc6193ef50570b762c) · ReportExporter [`0x3e0226b7…`](https://basescan.org/tx/0x3e0226b7e8e6601a0b14b1a4bc486dd7c7d1e6cfbdc3a0a85e0e6d3242eed64a) · PolicyExtractor [`0x94823df6…`](https://basescan.org/tx/0x94823df6fc9f2fd74c898dd03708ca341279e32dff31cf8d7a72c077fce0ca3d)
 
 </div>
 
