@@ -1,0 +1,54 @@
+[
+  {
+    "case": "Collision — denial cites §7.3 exclusion; §12.1 collision-exception applies",
+    "expected": "APPROVED",
+    "debate": {
+      "decision": "APPROVED",
+      "amount": 12000.0,
+      "clauses": [
+        "§12.1",
+        "§2.1",
+        "§7.3"
+      ],
+      "agents": [
+        "Blake",
+        "Morgan",
+        "Alex",
+        "Sam"
+      ]
+    },
+    "single_llm": {
+      "decision": "APPROVED",
+      "amount": 12000.0,
+      "clauses": [
+        "section 7.3"
+      ]
+    }
+  },
+  {
+    "case": "Theft — denial alleges undisclosed rideshare (fraud), unsupported by evidence",
+    "expected": "APPROVED",
+    "debate": {
+      "decision": "APPROVED",
+      "amount": 3700.0,
+      "clauses": [
+        "§5.2",
+        "§7.4"
+      ],
+      "agents": [
+        "Blake",
+        "Morgan",
+        "Alex",
+        "Quinn",
+        "Sam"
+      ]
+    },
+    "single_llm": {
+      "decision": "APPROVED",
+      "amount": 3700.0,
+      "clauses": [
+        "section 5.2"
+      ]
+    }
+  }
+]
