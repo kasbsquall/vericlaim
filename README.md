@@ -88,10 +88,12 @@ denial alleges **fraud or misrepresentation**, VeriClaim dynamically **recruits 
 no collision, Robert Hayes → **DENIED** — the panel upholds valid denials too. It's an auditor, not a
 rubber stamp.)*
 
-**Proven, not just claimed.** In a head-to-head [eval](eval/), VeriClaim scores **4/4** vs a single
-GPT-4o's **3/4**: on a denial overturnable *only* by a de-minimis clause (§12.3) that lives in the
-**policy corpus**, the single call **wrongly denies** while VeriClaim's RAG surfaces the clause and
-**correctly approves** — the multi-agent panel changing the *outcome*, not just the citation.
+**Proven, not just claimed — with an ablation.** A head-to-head [eval](eval/) shows the honest picture:
+the **decision moat is retrieval.** A single GPT-4o drops to **3/4** without the policy corpus (it
+*wrongly denies* a claim overturnable only by §12.3, a clause that lives in the policy) and recovers to
+**4/4** when handed the same retrieved clauses. VeriClaim's edge over a single call is the **process** a
+black box can't give you: an auditable adversarial transcript, impartiality (it upholds valid denials too),
+a fraud specialist recruited on demand, and a tamper-evident audit hash.
 
 ## Agents hiring agents (A2A composability)
 

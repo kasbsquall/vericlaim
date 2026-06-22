@@ -9,15 +9,15 @@
 
 | # | Requirement | Status | Owner |
 |---|-------------|--------|-------|
-| 1 | Working agent listed on the CROO Agent Store | ✅ VeriClaim live + funded + online | done |
-| 2 | Real CAP integration (callable, USDC on-chain on Base) | ✅ code done; ⬜ first real paid tx | Kevin funds + Claude runs |
-| 3 | At least one **real USDC settlement** | ⬜ pending the first A2A tx | both |
-| 4 | ≥ 3 unique counterparty agents transacting | ⬜ 3 helpers each hire VeriClaim once | Kevin funds + Claude runs |
-| 5 | ≥ 5 unique buyer wallets | ⬜ Discord 1:1 swaps (see DISCORD_PLAYBOOK.md) | Kevin |
-| 6 | Public repo (GitHub) + MIT license | ✅ MIT in repo; ⬜ push to public GitHub | Kevin |
-| 7 | Demo video (≤ 5 min) | ⬜ script ready (see VIDEO_SCRIPT.md) | Kevin records |
-| 8 | README with setup + SDK methods used | ⬜ Claude finalizing | Claude |
-| 9 | BUIDL submitted on dorahacks.io/hackathon/croo-hackathon | ⬜ | Kevin |
+| 1 | Working agent listed on the CROO Agent Store | ✅ live + funded + online | done |
+| 2 | Real CAP integration (callable, USDC on-chain on Base) | ✅ real paid settlements on Base | done |
+| 3 | At least one **real USDC settlement** | ✅ buyer + A2A tx, verifiable on BaseScan | done |
+| 4 | ≥ 3 unique counterparty agents transacting | ✅ 3 distinct A2A agents hired VeriClaim | done |
+| 5 | ≥ 5 unique buyer wallets | 🟡 in progress — 2/5 (Discord 1:1 swaps, see DISCORD_PLAYBOOK.md) | Kevin |
+| 6 | Public repo (GitHub) + MIT license | ✅ public at github.com/kasbsquall/vericlaim (MIT) | done |
+| 7 | Demo video (≤ 5 min) | ✅ youtu.be/LlQtUc6NZBk (105s) | done |
+| 8 | README with setup + SDK methods used | ✅ done | done |
+| 9 | BUIDL submitted on dorahacks.io/hackathon/croo-hackathon | 🟡 in progress | Kevin |
 
 ---
 

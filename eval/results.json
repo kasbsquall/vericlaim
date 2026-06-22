@@ -22,6 +22,14 @@
       "clauses": [
         "section 7.3"
       ]
+    },
+    "single_llm_rag": {
+      "decision": "APPROVED",
+      "amount": 12000.0,
+      "clauses": [
+        "§12.1",
+        "§2.1"
+      ]
     }
   },
   {
@@ -32,6 +40,7 @@
       "amount": 3700.0,
       "clauses": [
         "§12.3",
+        "§5.2",
         "§7.4"
       ],
       "agents": [
@@ -47,6 +56,14 @@
       "amount": 3700.0,
       "clauses": [
         "section 5.2"
+      ]
+    },
+    "single_llm_rag": {
+      "decision": "APPROVED",
+      "amount": 3700.0,
+      "clauses": [
+        "§5.2",
+        "§12.3"
       ]
     }
   },
@@ -69,6 +86,13 @@
     },
     "single_llm": {
       "decision": "DENIED",
+      "amount": 0.0,
+      "clauses": [
+        "section 7.3"
+      ]
+    },
+    "single_llm_rag": {
+      "decision": "DENIED",
       "amount": 0,
       "clauses": [
         "section 7.3"
@@ -83,6 +107,7 @@
       "amount": 6300.0,
       "clauses": [
         "§12.3",
+        "§2.1",
         "§7.4"
       ],
       "agents": [
@@ -98,6 +123,14 @@
       "amount": 0,
       "clauses": [
         "section 7.4"
+      ]
+    },
+    "single_llm_rag": {
+      "decision": "APPROVED",
+      "amount": 6300.0,
+      "clauses": [
+        "§2.1",
+        "§12.3"
       ]
     }
   }
