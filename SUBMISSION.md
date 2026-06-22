@@ -15,7 +15,7 @@
 | 4 | ≥ 3 unique counterparty agents transacting | ✅ 3 distinct A2A agents hired VeriClaim | done |
 | 5 | ≥ 5 unique buyer wallets | 🟡 in progress — 2/5 (Discord 1:1 swaps, see DISCORD_PLAYBOOK.md) | Kevin |
 | 6 | Public repo (GitHub) + MIT license | ✅ public at github.com/kasbsquall/vericlaim (MIT) | done |
-| 7 | Demo video (≤ 5 min) | ✅ youtu.be/LlQtUc6NZBk (105s) | done |
+| 7 | Demo video (≤ 5 min) | ✅ youtu.be/M0c9lu3PoTg (105s) | done |
 | 8 | README with setup + SDK methods used | ✅ done | done |
 | 9 | BUIDL submitted on dorahacks.io/hackathon/croo-hackathon | 🟡 in progress | Kevin |
 
