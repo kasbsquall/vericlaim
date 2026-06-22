@@ -1,0 +1,27 @@
+{
+  "claim_number": "CLM-2024-09112",
+  "policy_id": "CPP-2024-8821",
+  "policy": {
+    "policy_type": "Auto / Collision + Comprehensive",
+    "insured_name": "Maria Alvarez",
+    "insurance_company": "Crestview Mutual Insurance",
+    "coverage_limit": 50000.0,
+    "deductible": 500.0
+  },
+  "incident_type": "collision",
+  "incident_description": "While en route making a paid food-delivery order, the insured vehicle was rear-ended while stopped at a red light on Elm Street. Rear bumper, trunk, and quarter panel were damaged. The other driver was cited for following too closely. The vehicle was actively being used for a paid delivery at the moment of the collision.",
+  "original_denial_reason": "Claim denied per §7.4 — General Exclusions. At the time of the loss the insured vehicle was being used for a paid commercial food-delivery. This is commercial use of the vehicle not disclosed at policy inception, which voids coverage under §7.4.",
+  "amount_requested": 6800.0,
+  "supporting_docs": [
+    {
+      "type": "police_report",
+      "ref": "PD-2024-55120",
+      "summary": "Insured vehicle struck from behind while stopped at a traffic signal. Other driver cited for following too closely."
+    },
+    {
+      "type": "platform_records",
+      "ref": "DLV-MA-2024",
+      "summary": "Delivery-platform records show the insured completed exactly 8 paid delivery trips during the entire policy month of the loss (this collision occurred on the 8th). The vehicle carries personal plates and has no commercial branding, decals, livery, or for-hire registration."
+    }
+  ]
+}

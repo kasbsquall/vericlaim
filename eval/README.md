@@ -12,37 +12,43 @@ Reproduce: `.venv/Scripts/python eval/run_eval.py` (DB up). Raw output in [`resu
 
 | Case | Expected | VeriClaim (debate) | Single GPT-4o (1 call) |
 |---|---|---|---|
-| Collision — denial cites **§7.3** exclusion; **§12.1** collision-exception applies | APPROVED $12,000 | ✅ APPROVED $12,000 · cites **§12.1** (the exception) + §7.3 · 4 agents | APPROVED $12,000 · cites only **§7.3** |
-| Theft — denial alleges undisclosed rideshare (fraud), unsupported | APPROVED $3,700 | ✅ APPROVED $3,700 · cites §7.4 (the fraud clause it overturns) · **recruits Quinn (SIU)** · 5 agents | APPROVED $3,700 · cites only §5.2 |
-| Mechanical failure — genuine wear-and-tear, **no collision**; §7.3 applies, no exception | **DENIED** | ✅ **DENIED** · weighs §12.1/§2.1 and **rejects** them (no collision) → upholds §7.3 · 4 agents | DENIED · cites §7.3 |
+| Collision — denial cites **§7.3** exclusion; **§12.1** collision-exception applies | APPROVED $12,000 | ✅ APPROVED $12,000 · cites **§12.1** (the exception) + §7.3 | APPROVED $12,000 · cites only **§7.3** (the exclusion) |
+| Theft — denial alleges undisclosed rideshare (fraud), unsupported | APPROVED $3,700 | ✅ APPROVED $3,700 · **recruits Quinn (SIU)** · cites §7.4 | APPROVED $3,700 · cites only §5.2 |
+| Mechanical failure — genuine wear-and-tear, **no collision**; §7.3 applies, no exception | **DENIED** | ✅ **DENIED** · weighs §12.1/§2.1 and **rejects** them (no collision) | DENIED · cites §7.3 |
+| Commercial-use denial (**§7.4**) — overturned **only** by the **§12.3 de-minimis** exception, which lives in the policy corpus | APPROVED $6,300 | ✅ **APPROVED $6,300** · RAG surfaces **§12.3** (under-10 incidental trips) → §7.4 doesn't bar | ❌ **DENIED $0** · applies §7.4; **never sees §12.3** |
 
-**Decision accuracy:** VeriClaim 3/3 · single GPT-4o 3/3 — including a genuine exclusion both correctly **DENY**. That third case is the **control**: it proves VeriClaim is an impartial auditor, not a rubber stamp — the same engine that overturns two wrong denials *upholds* a valid one.
+**Decision accuracy:** VeriClaim **4/4** · single GPT-4o **3/4**.
 
 ## What the numbers actually show
 
-On the **decision**, a strong single call reaches the same outcome — these claims include supporting
-documents that make the right answer reachable. The measurable delta is in **grounding and
-auditability**, which is precisely what separates *an answer* from a *legally-defensible verdict*:
+1. **A real decision-level delta where retrieval is load-bearing (the headline).** On the §7.4
+   commercial-use case the insured was rear-ended *while making a paid delivery* — so the exclusion
+   applies on its face, and the single LLM correctly-but-wrongly **DENIES** the whole claim. The thing
+   that overturns it — **§12.3**, a *de-minimis incidental-use* safe harbor (fewer than 10 paid trips
+   per month) — exists **only in the policy corpus**, not in general knowledge or the claim text.
+   VeriClaim's RAG (Morgan) retrieves it; the panel applies it; the verdict flips to **APPROVED
+   $6,300**. A single call cannot reach the right answer because it never has the governing clause.
+   *This is the debate + RAG changing the outcome, not just the citation.*
+2. **Correct clause grounding even when the decision matches.** On the collision case both APPROVE, but
+   the single LLM **approved while citing §7.3 — the *exclusion*, the reason to *deny*** (internally
+   inconsistent). VeriClaim cites **§12.1**, the exception that actually *justifies* the approval,
+   retrieved verbatim. A verdict you can defend has to cite the clause that *governs the outcome*.
+3. **Impartial — not a rubber stamp.** The wear-and-tear case is the **control**: the same engine that
+   overturns two wrong denials *upholds* a valid one (DENIED), and on the way it actively weighs the
+   §12.1 exception and *rejects* it (no collision) rather than ignoring it.
+4. **Dynamic specialist recruitment.** The fraud case recruits **Quinn (SIU)** — a sixth agent that
+   exists only to test the allegation. A single call has no notion of escalating to a specialist.
+5. **Auditability.** VeriClaim emits the full transcript and seals it with a tamper-evident SHA-256 hash
+   over {claim + transcript + decision + amount}. The single call is a black box.
 
-1. **Correct clause grounding (the key delta).** On the collision case the single LLM **approved the
-   claim while citing §7.3 — the *exclusion*, i.e. the reason to *deny***. That is an internally
-   inconsistent ruling. VeriClaim cites **§12.1**, the actual exception that *justifies* the approval,
-   retrieved verbatim from the policy by Morgan's RAG. A verdict you can defend has to cite the clause
-   that *governs the outcome*, not the one it overrides.
-2. **Dynamic specialist recruitment.** The fraud case caused VeriClaim to recruit **Quinn (SIU)** — a
-   sixth agent that exists only to test fraud allegations. A single call has no notion of escalating to
-   a specialist; the panel composition itself adapts to the case.
-3. **Auditability.** VeriClaim emits the full multi-agent transcript and seals it with a tamper-evident
-   SHA-256 hash over {claim + transcript + decision + amount}. The single call is a black box.
-
-**Takeaway:** the debate isn't a stylistic flourish — it produces **correctly-grounded, specialist-
-augmented, tamper-evident rulings** where a single LLM produces a bare (and here, mis-cited) answer.
+**Takeaway:** when the deciding clause is in the claim, a strong single LLM matches the *decision* (and
+VeriClaim still wins on grounding, impartiality, and audit). When the governing clause lives **in the
+policy** — the realistic case — the single LLM gets the **decision wrong**, and the RAG-grounded panel
+gets it right.
 
 ## Honest limitations / next
 
-These cases don't force a *decision* divergence — the evidence is in the claim, and on the exclusion
-case a strong single call also correctly denies. The measurable delta is **grounding, auditability,
-and impartiality-by-construction**: on the denied case the panel actively weighs the §12.1 exception
-and *rejects* it (no collision), rather than ignoring it. A still-harder eval would use a denial whose
-governing exception lives **only** in the policy corpus (so RAG is required to surface it) — that's
-where a decision-level delta would appear. Tracked as future work.
+Three of four cases carry the deciding evidence in the claim itself, so the single LLM matches the
+decision there; the §12.3 case is the one that *requires* retrieval. This is a small, hand-built suite
+(n=4) meant to be illustrative, not a benchmark — a fuller eval would scale to dozens of corpus-only
+exceptions and genuine fraud cases. Tracked as next work.

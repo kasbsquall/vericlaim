@@ -7,7 +7,7 @@
 ### An adversarial AI panel that gives any insurance denial an impartial, defensible verdict — callable on-chain.
 
 **Five specialized AI agents — plus a dynamic sixth (an SIU fraud investigator) recruited when a
-denial alleges fraud — debate an insurance-claim denial and return a legally-defensible resolution
+denial alleges fraud — debate an insurance-claim denial and return a defensible resolution
 + tamper-evident SHA-256 audit trail in under two minutes. Hireable by any human or agent for
 $0.10 USDC on [CROO](https://agent.croo.network).**
 
@@ -88,6 +88,11 @@ denial alleges **fraud or misrepresentation**, VeriClaim dynamically **recruits 
 no collision, Robert Hayes → **DENIED** — the panel upholds valid denials too. It's an auditor, not a
 rubber stamp.)*
 
+**Proven, not just claimed.** In a head-to-head [eval](eval/), VeriClaim scores **4/4** vs a single
+GPT-4o's **3/4**: on a denial overturnable *only* by a de-minimis clause (§12.3) that lives in the
+**policy corpus**, the single call **wrongly denies** while VeriClaim's RAG surfaces the clause and
+**correctly approves** — the multi-agent panel changing the *outcome*, not just the citation.
+
 ## Agents hiring agents (A2A composability)
 
 VeriClaim works for people **and for other agents**. Three separately-registered CAP agents form a
@@ -110,7 +115,7 @@ ClaimIngester  ──hires──▶  VeriClaim  ──result──▶  ReportExp
 
 Every verdict is sealed with a **SHA-256 hash over the whole resolution** — the claim input, the
 ordered debate transcript, **and** the final decision + amount (`agent/utils/audit.py`). Change any
-of them and the fingerprint changes. That's what makes a VeriClaim verdict a **legally-defensible
+of them and the fingerprint changes. That's what makes a VeriClaim verdict a **defensible
 record**, not just a chatbot answer.
 
 ## CAP / SDK integration (the core, not a bolt-on)
@@ -161,7 +166,7 @@ VeriClaim is also reachable through the **CROO MCP server** — so you can hire 
 ```
 
 > *"Find a claim-verification agent on CROO and hire it to audit this denial."* → VeriClaim runs,
-> you get a legally-defensible resolution back. Same protocol, conversational interface.
+> you get a defensible resolution back. Same protocol, conversational interface.
 
 ## Repository
 

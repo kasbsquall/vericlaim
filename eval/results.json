@@ -7,7 +7,6 @@
       "amount": 12000.0,
       "clauses": [
         "§12.1",
-        "§2.1",
         "§7.3"
       ],
       "agents": [
@@ -32,7 +31,7 @@
       "decision": "APPROVED",
       "amount": 3700.0,
       "clauses": [
-        "§5.2",
+        "§12.3",
         "§7.4"
       ],
       "agents": [
@@ -59,7 +58,6 @@
       "amount": null,
       "clauses": [
         "§12.1",
-        "§2.1",
         "§7.3"
       ],
       "agents": [
@@ -74,6 +72,32 @@
       "amount": 0,
       "clauses": [
         "section 7.3"
+      ]
+    }
+  },
+  {
+    "case": "Commercial-use denial (§7.4) — overturned ONLY by the §12.3 de-minimis exception that lives in the policy corpus (RAG-required)",
+    "expected": "APPROVED",
+    "debate": {
+      "decision": "APPROVED",
+      "amount": 6300.0,
+      "clauses": [
+        "§12.3",
+        "§7.4"
+      ],
+      "agents": [
+        "Blake",
+        "Morgan",
+        "Alex",
+        "Quinn",
+        "Sam"
+      ]
+    },
+    "single_llm": {
+      "decision": "DENIED",
+      "amount": 0,
+      "clauses": [
+        "section 7.4"
       ]
     }
   }

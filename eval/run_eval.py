@@ -44,6 +44,7 @@ CLAIMS = [
     ("Collision — denial cites §7.3 exclusion; §12.1 collision-exception applies", "sample_claim.json", "APPROVED"),
     ("Theft — denial alleges undisclosed rideshare (fraud), unsupported by evidence", "sample_claim_fraud.json", "APPROVED"),
     ("Mechanical failure — genuine wear-and-tear, no collision; §7.3 applies, no exception", "sample_claim_denied.json", "DENIED"),
+    ("Commercial-use denial (§7.4) — overturned ONLY by the §12.3 de-minimis exception that lives in the policy corpus (RAG-required)", "sample_claim_rag_only.json", "APPROVED"),
 ]
 
 

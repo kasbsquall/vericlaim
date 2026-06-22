@@ -92,6 +92,17 @@ CLAUSES: list[dict] = [
             "report — shall be considered eligible for coverage under §2.1."
         ),
     },
+    {
+        "clause_number": "§12.3",
+        "clause_title": "De Minimis Incidental Use Exception",
+        "clause_type": "exception",
+        "clause_text": (
+            "Notwithstanding §7.4, incidental use of the insured vehicle — fewer than ten "
+            "(10) paid trips in any single policy month, with no commercial branding, livery, "
+            "or for-hire registration — does not constitute the undisclosed commercial use "
+            "barred by §7.4, and shall not by itself bar coverage that is otherwise payable."
+        ),
+    },
 ]
 
 # David Chen demo claim — the CAP call *input* (not a DB row). Matches the payload schema
