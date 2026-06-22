@@ -18,6 +18,7 @@ $0.10 USDC on [CROO](https://agent.croo.network).**
 **🟢 Live & proven on-chain** — real CAP settlements on Base (escrow → deliver → USDC):
 - **Buyers hire VeriClaim:** [`0xe45cf4b8…`](https://basescan.org/tx/0xe45cf4b86e118cba78d65934486fbe779ed9d1869412967d93c40651ea7d0f1e) · [`0x0638213d…`](https://basescan.org/tx/0x0638213d0b93e7c63dedffb31051e85e2ed21450257953284154baeae29163d8)
 - **Agent-to-agent — 3 distinct agents hired VeriClaim over CAP:** ClaimIngester [`0x318b7c1c…`](https://basescan.org/tx/0x318b7c1c7288ea4c9c830a01643b6d31d9f084ebbeb8cbbc6193ef50570b762c) · ReportExporter [`0x3e0226b7…`](https://basescan.org/tx/0x3e0226b7e8e6601a0b14b1a4bc486dd7c7d1e6cfbdc3a0a85e0e6d3242eed64a) · PolicyExtractor [`0x94823df6…`](https://basescan.org/tx/0x94823df6fc9f2fd74c898dd03708ca341279e32dff31cf8d7a72c077fce0ca3d)
+- **VeriClaim *composes* — it hires specialists on-chain, driven by the case:** PolicyExtractor [`0x906c5791…`](https://basescan.org/tx/0x906c5791fab4f73f1d3aeb5eba615369b94ee6c6b174b27605f69707cfea1dc7) · ReportExporter [`0x9700c23a…`](https://basescan.org/tx/0x9700c23a99e076c6a7cefeeebf42313a6772701278217959407ce9b37a89cfc8)
 
 </div>
 
@@ -97,9 +98,10 @@ a fraud specialist recruited on demand, and a tamper-evident audit hash.
 
 ## Agents hiring agents (A2A composability)
 
-VeriClaim works for people **and for other agents**. Three separately-registered CAP agents form a
-real pipeline — the *"agents hiring agents, paying in USDC"* story CROO is built for (≥3 unique
-counterparties):
+VeriClaim works for people **and for other agents — in both directions.** Three separately-registered
+CAP agents form a real pipeline (the *"agents hiring agents, paying in USDC"* story CROO is built for,
+≥3 unique counterparties) — **and VeriClaim itself composes**, hiring specialists on-chain when a case
+needs them (see *Composing adjudicator* below):
 
 | Agent | Does | Price | Track |
 |-------|------|-------|-------|
@@ -112,6 +114,25 @@ ClaimIngester  ──hires──▶  VeriClaim  ──result──▶  ReportExp
  (reads the email)         (adjudicates)           (produces the PDF)
         └────────────  3 agents · 1 pipeline · paid in USDC  ────────────┘
 ```
+
+### Composing adjudicator — VeriClaim hires specialists on-chain
+
+A fixed pipeline isn't the CROO thesis; a *composing* agent is. So VeriClaim doesn't only get hired —
+**it hires.** Driven by the case, mid-adjudication, it pays specialist agents on-chain:
+
+```
+  hire VeriClaim ──┬──▶ hires PolicyExtractor  (ingest a policy it hasn't seen → RAG)
+                   └──▶ hires ReportExporter   (render the verdict → filed PDF)
+       one call · a real on-chain A2A DAG · driven by the case, not a fixed chain
+```
+
+Real run (`compose_demo.py`; opt-in via `VERICLAIM_COMPOSE`, best-effort): a claim on a policy VeriClaim
+had **never seen** → it **hired PolicyExtractor on-chain** to ingest it
+([`0x906c5791…`](https://basescan.org/tx/0x906c5791fab4f73f1d3aeb5eba615369b94ee6c6b174b27605f69707cfea1dc7)),
+adjudicated, then **hired ReportExporter on-chain** to file the verdict
+([`0x9700c23a…`](https://basescan.org/tx/0x9700c23a99e076c6a7cefeeebf42313a6772701278217959407ce9b37a89cfc8)).
+Genuine demand — the adjudication *needs* those agents — not self-trade. A failed or unconfigured hire
+never breaks the verdict.
 
 ## Verifiable, tamper-evident audit trail
 
