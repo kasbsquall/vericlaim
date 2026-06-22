@@ -1,0 +1,24 @@
+{
+  "claim_number": "CLM-2024-COMPOSE-01",
+  "policy_id": "ARP-2024-3310",
+  "policy": {
+    "policy_type": "Acme Renters Protect v2",
+    "insured_name": "Jordan Lee",
+    "insurance_company": "Acme Mutual",
+    "coverage_limit": 25000.0,
+    "deductible": 250.0
+  },
+  "policy_document": "ACME RENTERS PROTECT v2 — EXCERPT\n§3.1 Water Damage Coverage. Sudden and accidental water damage to covered property is insured up to the policy limit after deductible.\n§7.2 Flood Exclusion. Loss caused by flood, surface water, or water originating from outside the building is excluded.\n§11.4 Plumbing Burst Exception. Notwithstanding §7.2, water damage caused by the sudden and accidental bursting of an interior plumbing system is covered under §3.1, as evidenced by a licensed plumber's report.",
+  "incident_type": "water_damage",
+  "incident_description": "An interior supply pipe burst overnight and flooded the unit, damaging flooring and electronics. A licensed plumber confirmed a sudden interior pipe failure, not external water.",
+  "original_denial_reason": "Claim denied under §7.2 — Flood Exclusion. The adjuster classified the loss as water-related flood damage.",
+  "amount_requested": 6200.0,
+  "deliver_pdf": true,
+  "supporting_docs": [
+    {
+      "type": "plumber_report",
+      "ref": "PLM-2024-7781",
+      "summary": "Sudden burst of an interior copper supply line. No external or surface water involved. Consistent with a §11.4 plumbing-burst event, not a §7.2 flood."
+    }
+  ]
+}

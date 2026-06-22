@@ -26,6 +26,7 @@ from config import settings
 from database.connection import AsyncSessionLocal
 from database.models import Verification
 from debate_engine import DebateResult, run_debate
+from recruit import recruit_policy_extractor, recruit_report_exporter
 
 logger = logging.getLogger("vericlaim.cap")
 
@@ -91,17 +92,33 @@ async def process_order(
     caller_wallet: str | None = None,
     payment_usdc: Decimal = HACKATHON_PRICE_USDC,
 ) -> dict:
-    """SDK-independent core: run the 5-agent debate, persist it, return the CAP response.
-
-    This is what both the live CAP handler and the local simulator call.
+    """SDK-independent core: optionally recruit specialist agents on-chain, run the 5-agent debate,
+    persist it, and return the CAP response. This is what the live CAP handler and the local
+    simulator both call. On-chain recruitment is opt-in (VERICLAIM_COMPOSE) and best-effort.
     """
+    recruited: list[dict] = []
+    # Case-driven: if the policy isn't in our corpus and the claim ships its text, hire
+    # PolicyExtractor on-chain to ingest it BEFORE the panel reasons over it.
+    pe = await recruit_policy_extractor(payload)
+    if pe:
+        recruited.append(pe)
+
     result = await run_debate(payload)
     await _persist(
         payload, result,
         cap_call_id=cap_call_id, caller_wallet=caller_wallet, payment_usdc=payment_usdc,
     )
+    response = _build_response(result)
+
+    # Case-driven: if the caller asked for a filed report, hire ReportExporter on-chain to render it.
+    re_trace = await recruit_report_exporter(payload, response)
+    if re_trace:
+        recruited.append(re_trace)
+    if recruited:
+        response["recruited_agents"] = recruited
+
     logger.info("Verification complete: %s -> %s", cap_call_id or "(local)", result.decision)
-    return _build_response(result)
+    return response
 
 
 async def _already_done(cap_call_id: str) -> bool:

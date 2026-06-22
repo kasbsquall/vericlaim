@@ -78,16 +78,17 @@ async def llm_json(system: str, user: str) -> dict:
 
 # --- CAP buyer -----------------------------------------------------------------------------------
 
-async def hire_service(
+async def hire_service_traced(
     sdk_key: str, service_id: str, requirements: dict, *, timeout: int = _DEFAULT_TIMEOUT
-) -> dict:
-    """Hire a CROO service and return its delivered JSON. Pays in USDC via CAP escrow."""
+) -> tuple[dict, dict]:
+    """Hire a CROO service; pay in USDC via CAP escrow. Returns (delivered_json, trace) where
+    trace = {"order_id", "negotiation_id"} — the on-chain handle of the hire (for the A2A audit)."""
     from croo import NegotiateOrderRequest
 
     if not sdk_key:
         raise RuntimeError("SDK key is empty — register this agent and set its key in .env.")
     if not service_id:
-        raise RuntimeError("service_id is empty — set VERICLAIM_SERVICE_ID in .env.")
+        raise RuntimeError("service_id is empty — set the target agent's service id in .env.")
 
     client = _make_client(sdk_key)
     try:
@@ -106,9 +107,18 @@ async def hire_service(
         await client.pay_order(order.order_id)
         logger.info("Paid order %s", order.order_id)
         delivery = await _await_delivery(client, order.order_id, timeout)
-        return json.loads(delivery.deliverable_text)
+        trace = {"order_id": order.order_id, "negotiation_id": neg.negotiation_id}
+        return json.loads(delivery.deliverable_text), trace
     finally:
         await client.close()
+
+
+async def hire_service(
+    sdk_key: str, service_id: str, requirements: dict, *, timeout: int = _DEFAULT_TIMEOUT
+) -> dict:
+    """Hire a CROO service and return its delivered JSON. Pays in USDC via CAP escrow."""
+    result, _ = await hire_service_traced(sdk_key, service_id, requirements, timeout=timeout)
+    return result
 
 
 async def _await_order(client, negotiation_id: str, timeout: int):
