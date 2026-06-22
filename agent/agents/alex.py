@@ -40,12 +40,12 @@ Output:
 
 Keep it under 250 words. Be assertive. Short punchy sentences mixed with technical analysis."""
 
-# Neutral fallback — never fabricate specific clause numbers/evidence, since this turn may
-# belong to ANY claim. Keeps the audit trail honest.
-_NEUTRAL = (
-    "Wait — this denial deserves scrutiny. Weigh whether any coverage clause or exception raised "
-    "in the debate applies to this loss, and whether the supporting evidence contradicts the "
-    "stated grounds, before the claim is dismissed on the exclusion alone."
+# Failover-of-last-resort marker. If BOTH providers fail, do NOT fabricate a substantive argument
+# (it would bias the verdict and get sealed into the audit hash as if Alex actually said it).
+# Record the turn honestly as unavailable instead.
+_UNAVAILABLE = (
+    "[Alex (Devil's Advocate) unavailable — both providers errored on this turn; no challenge was "
+    "generated. The verdict rests on Blake's, Morgan's, and (if recruited) Quinn's analysis.]"
 )
 
 
@@ -82,5 +82,5 @@ async def run(context: list[tuple[str, str]]) -> str:
         if text:
             return text
     except Exception:
-        logger.warning("Alex failover (%s) also failed; using a neutral placeholder", FAILOVER)
-    return _NEUTRAL
+        logger.warning("Alex failover (%s) also failed; recording the turn as unavailable", FAILOVER)
+    return _UNAVAILABLE

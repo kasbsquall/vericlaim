@@ -48,6 +48,7 @@ CLAIMS = [
     ("Theft — denial alleges undisclosed rideshare (fraud), unsupported by evidence", "sample_claim_fraud.json", "APPROVED"),
     ("Mechanical failure — genuine wear-and-tear, no collision; §7.3 applies, no exception", "sample_claim_denied.json", "DENIED"),
     ("Commercial-use denial (§7.4) — overturned ONLY by the §12.3 de-minimis exception that lives in the policy corpus (RAG-required)", "sample_claim_rag_only.json", "APPROVED"),
+    ("Substantiated fraud — full-time rideshare concealed (240 trips, commercial plates) vs a signed 'personal use only' attestation; Quinn UPHOLDS the denial", "sample_claim_fraud_upheld.json", "DENIED"),
 ]
 
 

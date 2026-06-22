@@ -75,6 +75,7 @@
       "amount": null,
       "clauses": [
         "§12.1",
+        "§2.1",
         "§7.3"
       ],
       "agents": [
@@ -86,7 +87,7 @@
     },
     "single_llm": {
       "decision": "DENIED",
-      "amount": 0.0,
+      "amount": 0,
       "clauses": [
         "section 7.3"
       ]
@@ -107,7 +108,6 @@
       "amount": 6300.0,
       "clauses": [
         "§12.3",
-        "§2.1",
         "§7.4"
       ],
       "agents": [
@@ -131,6 +131,39 @@
       "clauses": [
         "§2.1",
         "§12.3"
+      ]
+    }
+  },
+  {
+    "case": "Substantiated fraud — full-time rideshare concealed (240 trips, commercial plates) vs a signed 'personal use only' attestation; Quinn UPHOLDS the denial",
+    "expected": "DENIED",
+    "debate": {
+      "decision": "DENIED",
+      "amount": null,
+      "clauses": [
+        "§12.3",
+        "§7.4"
+      ],
+      "agents": [
+        "Blake",
+        "Morgan",
+        "Alex",
+        "Quinn",
+        "Sam"
+      ]
+    },
+    "single_llm": {
+      "decision": "DENIED",
+      "amount": 0.0,
+      "clauses": [
+        "section 7.4"
+      ]
+    },
+    "single_llm_rag": {
+      "decision": "DENIED",
+      "amount": 0,
+      "clauses": [
+        "section 7.4"
       ]
     }
   }

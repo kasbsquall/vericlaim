@@ -18,8 +18,9 @@ Reproduce: `.venv/Scripts/python eval/run_eval.py` (DB up). Raw output in [`resu
 | Theft — unsupported rideshare/fraud allegation | APPROVED $3,700 | ✅ **recruits Quinn (SIU)** | ✅ cites §5.2 | ✅ cites §5.2 |
 | Mechanical failure — genuine wear-and-tear, no collision | **DENIED** | ✅ weighs §12.1 & **rejects** it | ✅ §7.3 | ✅ §7.3 |
 | Commercial-use (§7.4) — overturned only by **§12.3** (corpus-only) | APPROVED $6,300 | ✅ §12.3 → **$6,300** | ❌ **DENIED $0** | ✅ §12.3 → $6,300 |
+| Substantiated fraud — 240 concealed rideshare trips vs a signed "personal use only" attestation | **DENIED** | ✅ **Quinn UPHOLDS** — §12.3 de-minimis rejected (240≫10), §7.4 applies | ✅ DENIED | ✅ DENIED |
 
-**Decision accuracy:** VeriClaim **4/4** · single GPT-4o **no-RAG 3/4** · single GPT-4o **+RAG 4/4**.
+**Decision accuracy:** VeriClaim **5/5** · single GPT-4o **no-RAG 4/5** · single GPT-4o **+RAG 5/5**.
 
 ## What the ablation actually proves (the honest part)
 
@@ -34,7 +35,7 @@ Reproduce: `.venv/Scripts/python eval/run_eval.py` (DB up). Raw output in [`resu
    - a **clause-by-clause adversarial transcript** — a strict insurer-side read (Blake) vs a claimant-side
      challenge (Alex), weighed by a neutral notary (Sam) — so the *reasoning* is auditable, not just the output;
    - **impartiality by construction** (the wear-and-tear control: the same panel *upholds* a valid denial → DENIED, not a rubber stamp);
-   - a **dynamically-recruited fraud specialist** (Quinn, only on fraud allegations);
+   - a **dynamically-recruited fraud specialist** (Quinn) that cuts **both ways** — it *cleared* an unsupported rideshare allegation (theft case → APPROVED) *and* **upheld** a substantiated one (240 concealed trips vs a signed "personal use only" attestation → DENIED). Not a claimant rubber stamp either;
    - a **tamper-evident SHA-256 audit** over {claim + full transcript + decision + amount}.
 3. **Grounding, not guessing.** Even where decisions match, VeriClaim cites the clause that *governs the
    outcome* (§12.1, the exception) — where the no-RAG single call approved while citing §7.3, the
@@ -46,8 +47,7 @@ decisions delivered as a transparent, impartial, tamper-evident record, callable
 
 ## Honest limitations / next
 
-n=4, hand-built — illustrative, not a benchmark. The debate does **not** beat a retrieval-equipped single
+n=5, hand-built — illustrative, not a benchmark. The debate does **not** beat a retrieval-equipped single
 call on *decision* in this suite; its edge is auditability, impartiality, and specialist recruitment. A
-fuller eval would (a) scale to dozens of corpus-only exceptions, (b) add genuine *substantiated* fraud
-where Quinn should **uphold** a denial, and (c) test whether the adversarial transcript catches bad-faith
-or prompt-injected denials that a single call rubber-stamps. Tracked as next work.
+fuller eval would (a) scale to dozens of corpus-only exceptions and (b) test whether the adversarial
+transcript catches bad-faith or prompt-injected denials that a single call rubber-stamps. Tracked as next work.

@@ -35,10 +35,9 @@ the allegation is not backed by real evidence, say plainly that it cannot, by it
 Write in plain, natural prose — like a sharp investigator briefing the panel, not a form. No labels
 or headings. Keep it under 180 words."""
 
-_NEUTRAL = (
-    "The misrepresentation allegation is not corroborated by anything in the file — no "
-    "documentation, records, or physical findings are offered to substantiate it. On the evidence "
-    "in the record, an unproven suspicion cannot, by itself, defeat otherwise-valid coverage."
+_UNAVAILABLE = (
+    "[Quinn (SIU) unavailable — the provider errored on this turn; no fraud finding was generated. "
+    "The allegation was neither substantiated nor cleared by SIU on this run.]"
 )
 
 
@@ -54,5 +53,5 @@ async def run(context: list[tuple[str, str]]) -> str:
         if text:
             return text
     except Exception:
-        logger.warning("Quinn (aimlapi) failed; using a neutral SIU finding")
-    return _NEUTRAL
+        logger.warning("Quinn (aimlapi) failed; recording the turn as unavailable")
+    return _UNAVAILABLE

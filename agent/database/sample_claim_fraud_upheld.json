@@ -1,0 +1,32 @@
+{
+  "claim_number": "CLM-2024-10240",
+  "policy_id": "CPP-2024-8821",
+  "policy": {
+    "policy_type": "Auto / Collision + Comprehensive",
+    "insured_name": "Daniel Cruz",
+    "insurance_company": "Crestview Mutual Insurance",
+    "coverage_limit": 50000.0,
+    "deductible": 500.0
+  },
+  "incident_type": "collision",
+  "incident_description": "Insured vehicle collided with a center divider on the highway and sustained front-end damage. The driver reported the loss the next day.",
+  "original_denial_reason": "Claim denied per §7.4 — General Exclusions. Investigation found the insured operates the vehicle as a full-time ride-hail (TNC) driver, a commercial use that was not disclosed and was affirmatively denied on the policy application. This is undisclosed commercial use under §7.4.",
+  "amount_requested": 9000.0,
+  "supporting_docs": [
+    {
+      "type": "platform_records",
+      "ref": "TNC-DC-2024",
+      "summary": "Ride-hail platform records show the insured completed 240 paid passenger trips in the policy month of the loss, and has driven commercially on the platform for 14 consecutive months. The vehicle carries TNC/commercial livery plates and displays active rideshare decals."
+    },
+    {
+      "type": "policy_application",
+      "ref": "APP-CPP-2024-8821",
+      "summary": "At policy inception the insured attested in writing: 'Vehicle is for personal use only — no commercial, livery, delivery, or ride-hail use.' Signed and dated by the insured."
+    },
+    {
+      "type": "adjuster_note",
+      "ref": "ADJ-2024-10240",
+      "summary": "Commercial use is corroborated by the platform records, the commercial plates, and the rideshare decals — and directly contradicts the insured's signed 'personal use only' attestation. Material misrepresentation at inception."
+    }
+  ]
+}
