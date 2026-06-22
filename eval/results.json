@@ -50,5 +50,31 @@
         "section 5.2"
       ]
     }
+  },
+  {
+    "case": "Mechanical failure — genuine wear-and-tear, no collision; §7.3 applies, no exception",
+    "expected": "DENIED",
+    "debate": {
+      "decision": "DENIED",
+      "amount": null,
+      "clauses": [
+        "§12.1",
+        "§2.1",
+        "§7.3"
+      ],
+      "agents": [
+        "Blake",
+        "Morgan",
+        "Alex",
+        "Sam"
+      ]
+    },
+    "single_llm": {
+      "decision": "DENIED",
+      "amount": 0,
+      "clauses": [
+        "section 7.3"
+      ]
+    }
   }
 ]

@@ -14,8 +14,9 @@ Reproduce: `.venv/Scripts/python eval/run_eval.py` (DB up). Raw output in [`resu
 |---|---|---|---|
 | Collision — denial cites **§7.3** exclusion; **§12.1** collision-exception applies | APPROVED $12,000 | ✅ APPROVED $12,000 · cites **§12.1** (the exception) + §7.3 · 4 agents | APPROVED $12,000 · cites only **§7.3** |
 | Theft — denial alleges undisclosed rideshare (fraud), unsupported | APPROVED $3,700 | ✅ APPROVED $3,700 · cites §7.4 (the fraud clause it overturns) · **recruits Quinn (SIU)** · 5 agents | APPROVED $3,700 · cites only §5.2 |
+| Mechanical failure — genuine wear-and-tear, **no collision**; §7.3 applies, no exception | **DENIED** | ✅ **DENIED** · weighs §12.1/§2.1 and **rejects** them (no collision) → upholds §7.3 · 4 agents | DENIED · cites §7.3 |
 
-**Decision accuracy:** VeriClaim 2/2 · single GPT-4o 2/2.
+**Decision accuracy:** VeriClaim 3/3 · single GPT-4o 3/3 — including a genuine exclusion both correctly **DENY**. That third case is the **control**: it proves VeriClaim is an impartial auditor, not a rubber stamp — the same engine that overturns two wrong denials *upholds* a valid one.
 
 ## What the numbers actually show
 
@@ -39,7 +40,9 @@ augmented, tamper-evident rulings** where a single LLM produces a bare (and here
 
 ## Honest limitations / next
 
-These two cases don't force a *decision* divergence (the evidence is in the claim). A stronger eval
-would add cases where the governing exception lives **only** in the policy corpus (so RAG is required
-to find it) and cases of genuine exclusions where a naive call tends to **over-approve** — that's where
-a decision-level delta would appear. Tracked as future work.
+These cases don't force a *decision* divergence — the evidence is in the claim, and on the exclusion
+case a strong single call also correctly denies. The measurable delta is **grounding, auditability,
+and impartiality-by-construction**: on the denied case the panel actively weighs the §12.1 exception
+and *rejects* it (no collision), rather than ignoring it. A still-harder eval would use a denial whose
+governing exception lives **only** in the policy corpus (so RAG is required to surface it) — that's
+where a decision-level delta would appear. Tracked as future work.

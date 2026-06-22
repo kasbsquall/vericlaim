@@ -1,0 +1,27 @@
+{
+  "claim_number": "CLM-2024-07788",
+  "policy_id": "CPP-2024-8821",
+  "policy": {
+    "policy_type": "Auto / Collision + Comprehensive",
+    "insured_name": "Robert Hayes",
+    "insurance_company": "Crestview Mutual Insurance",
+    "coverage_limit": 50000.0,
+    "deductible": 500.0
+  },
+  "incident_type": "mechanical_failure",
+  "incident_description": "While driving at a steady 55 mph on Route 9 with no other vehicle, object, or road-surface contact involved, the engine lost power and seized. There was no collision, no impact, and no accident of any kind — the vehicle simply stopped running and was towed. Subsequent teardown attributed the failure to a worn timing chain and chronic oil starvation that developed gradually over time.",
+  "original_denial_reason": "Claim denied per §7.3 — Mechanical Failure Exclusion. Teardown confirms gradual wear-and-tear (worn timing chain, chronic oil starvation); no covered collision event occurred, so no exception applies.",
+  "amount_requested": 8500.0,
+  "supporting_docs": [
+    {
+      "type": "mechanic_report",
+      "ref": "BM-AUTO-2024-211",
+      "summary": "Engine failure caused by a worn timing chain and long-term oil starvation with heavy sludge buildup — classic gradual deterioration. NO evidence of collision or external impact damage anywhere on the vehicle. Failure is consistent with deferred maintenance, not a sudden external event."
+    },
+    {
+      "type": "maintenance_records",
+      "ref": "SVC-HAYES-2024",
+      "summary": "Oil service overdue by approximately 14,000 miles. Two prior dashboard oil-pressure warnings logged and not acted upon. No record of the timing chain ever being inspected."
+    }
+  ]
+}

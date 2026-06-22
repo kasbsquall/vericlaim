@@ -35,11 +35,12 @@ DoraHacks uses **AI judges + human judges**. Research shows they score on roughl
 **What the judges reward in agent hackathons:** the protocol (CAP/USDC) used as the **core**, not bolted on. Real autonomous execution + real settlement, not a mock.
 
 ### Our winning angles (lean into these everywhere — video, README, BUIDL text)
-1. **Adversarial 5-agent debate** — not a single LLM wrapper. A real multi-agent process with a visible transcript. *This is the wow factor.*
+1. **Adversarial 5–6 agent debate** — not a single LLM wrapper. A real multi-agent process with a visible transcript; the method is adversarial, the verdict is impartial (a dynamic 6th SIU agent joins on fraud). *This is the wow factor.*
 2. **Verifiable, tamper-evident audit** — SHA-256 over the full resolution (claim + debate + decision). Frames VeriClaim as "legally-defensible," which no thin wrapper can claim.
 3. **Real A2A composability** — ClaimIngester → VeriClaim → ReportExporter, agents paying each other in USDC. This is *literally* the agent-commerce story CROO is selling.
 4. **CAP as the core** — real `negotiate → pay → deliver` settlement on Base, autonomous poll-based provider. Not surface-level.
 5. **Product-grade polish** — logo, dashboard, clean README. Most submissions look unfinished.
+6. **Impartial by construction** — ships a **DENIED control case** + a 3-case eval (3/3): the same engine that overturns two wrong denials *upholds* a valid one. An auditor, not a rubber stamp — which is exactly what makes the "legally-defensible verdict" claim credible (and lets agents/insurers trust it, not just claimants).
 
 ---
 

@@ -4,7 +4,7 @@
 
 # VeriClaim
 
-### Adversarial AI that fights for your insurance claim — callable on-chain.
+### An adversarial AI panel that gives any insurance denial an impartial, defensible verdict — callable on-chain.
 
 **Five specialized AI agents — plus a dynamic sixth (an SIU fraud investigator) recruited when a
 denial alleges fraud — debate an insurance-claim denial and return a legally-defensible resolution
@@ -13,7 +13,7 @@ $0.10 USDC on [CROO](https://agent.croo.network).**
 
 `CROO Agent Hackathon` · `DoraHacks` · Tracks: **Data & Verification** + **Research & Intelligence**
 
-[▶ Demo video](https://youtu.be/KrCo8s55bXU) · [Hire on CROO](https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
+[▶ Demo video](https://youtu.be/LlQtUc6NZBk) · [Hire on CROO](https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
 
 **🟢 Live & proven on-chain** — real CAP settlements on Base (escrow → deliver → USDC):
 - **Buyers hire VeriClaim:** [`0xe45cf4b8…`](https://basescan.org/tx/0xe45cf4b86e118cba78d65934486fbe779ed9d1869412967d93c40651ea7d0f1e) · [`0x0638213d…`](https://basescan.org/tx/0x0638213d0b93e7c63dedffb31051e85e2ed21450257953284154baeae29163d8)
@@ -32,9 +32,12 @@ adjusters. **You have a denial letter and a deadline.** The fight isn't fair —
 
 ## The solution
 
-VeriClaim puts your denial in front of a **panel that fights for you**. Five AI agents run a real
-**adversarial debate** over your case and the policy text, find the exception the insurer ignored,
-and issue a structured, citation-backed verdict — sealed with a verifiable audit trail.
+VeriClaim puts your denial in front of an **adversarial panel**. Five AI agents debate your case
+against the policy text — one agent's job is to **challenge the denial**, so no valid exception is
+missed — and a neutral notary issues an **impartial, citation-backed verdict** (APPROVED, PARTIAL,
+or DENIED), sealed with a verifiable audit trail. It's the **evidence you take back to the insurer**
+— the exact clause that governs your case, in a tamper-evident record — **not a payout, and not a
+chatbot opinion.**
 
 It isn't a web app you open. It's an **autonomous agent listed on the CROO Agent Store**: any human —
 or **any other agent** — can hire it over **CAP (CROO Agent Protocol)** and pay in **USDC on Base**.
@@ -70,17 +73,20 @@ or **any other agent** — can hire it over **CAP (CROO Agent Protocol)** and pa
 | **Coordinator** | Builds the case file, orchestrates turns | — | Frames the debate |
 | 🔵 **Blake** | Claims Evaluator | GPT-4o · AI/ML API | Cold, data-driven first read |
 | 🟣 **Morgan** | Policy Analyst (RAG over pgvector) | GPT-4o · AI/ML API | Quotes clauses **verbatim** — never from memory |
-| 🔴 **Alex** | Devil's Advocate | Hermes-2-Pro · Featherless (failover GPT-4o) | **Argues against the denial** — finds the exception |
+| 🔴 **Alex** | Devil's Advocate | Hermes-2-Pro · Featherless (failover GPT-4o) | **Challenges the denial** — so a valid exception is never missed |
 | 🟪 **Quinn** ⚡ | SIU Investigator — **recruited only when fraud is alleged** | GPT-4o · AI/ML API | The **dynamic 6th agent** — tests whether a fraud/misrepresentation allegation is actually substantiated, so coverage is never defeated on unproven suspicion |
-| 🟢 **Sam** | Resolution Notary | GPT-4o · AI/ML API | Issues the binding, structured verdict |
+| 🟢 **Sam** | Resolution Notary | GPT-4o · AI/ML API | Weighs the full debate and issues the impartial verdict — APPROVED / PARTIAL / DENIED |
 
 This is the differentiator: **not a single-LLM wrapper** — a genuine multi-agent adversarial process
-with a visible transcript, where one agent literally fights *against* the denial on your behalf. And
+with a visible transcript, where one agent's job is to **challenge the denial** so a valid exception is
+never missed, before a neutral notary rules. The verdict is **impartial — it can go either way.** And
 the panel **adapts to the case**: a normal coverage dispute runs the 5-agent debate; the moment the
 denial alleges **fraud or misrepresentation**, VeriClaim dynamically **recruits a 6th specialist
-(Quinn, SIU)** to investigate the allegation before any verdict is issued. *(Demo: the David Chen
-collision runs 5 agents → APPROVED $12,000; the Lisa Park "undisclosed rideshare" denial recruits
-Quinn → APPROVED $3,700, because the fraud allegation has no evidence behind it.)*
+(Quinn, SIU)** to test the allegation before any verdict is issued. *(Demo: the David Chen collision
+→ **APPROVED $12,000** via §12.1; the Lisa Park "undisclosed rideshare" denial recruits Quinn →
+**APPROVED $3,700** (the fraud allegation has no evidence); and a genuine wear-and-tear failure with
+no collision, Robert Hayes → **DENIED** — the panel upholds valid denials too. It's an auditor, not a
+rubber stamp.)*
 
 ## Agents hiring agents (A2A composability)
 
