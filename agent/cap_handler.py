@@ -233,8 +233,30 @@ async def start_provider() -> None:
                     if await _already_done(order.order_id):
                         delivered.add(order.order_id)
                         continue
-                    negotiation = await client.get_negotiation(order.negotiation_id)
-                    payload = _parse_requirements(negotiation.requirements)
+                    try:
+                        negotiation = await client.get_negotiation(order.negotiation_id)
+                        payload = _parse_requirements(negotiation.requirements)
+                    except Exception:
+                        # A malformed/empty order (e.g. requirements '{}' — a hire with no claim
+                        # pasted into the requirement box) must NOT jam the poll loop and block the
+                        # good orders behind it. Mark it handled, deliver a helpful notice, move on.
+                        logger.exception("order %s has invalid requirements; skipping it", order.order_id)
+                        delivered.add(order.order_id)
+                        try:
+                            await client.deliver_order(
+                                order.order_id,
+                                DeliverOrderRequest(
+                                    deliverable_type=DeliverableType.TEXT,
+                                    deliverable_text=json.dumps({
+                                        "error": "No claim received. Paste a claim JSON (with "
+                                                 "claim_number, policy, incident_type and "
+                                                 "amount_requested) into the requirement box before hiring."
+                                    }),
+                                ),
+                            )
+                        except Exception:
+                            logger.exception("could not deliver the error notice for order %s", order.order_id)
+                        continue
                     response = await process_order(
                         payload,
                         cap_call_id=order.order_id,
