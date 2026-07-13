@@ -13,7 +13,7 @@ $0.10 USDC on [CROO](https://agent.croo.network).**
 
 `CROO Agent Hackathon` · `DoraHacks` · Tracks: **Data & Verification** + **Research & Intelligence**
 
-[▶ Demo video](https://youtu.be/M0c9lu3PoTg) · [Hire on CROO](https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
+[▶ Demo video](https://youtu.be/0AAfS_ePqq8) · [Hire on CROO](https://agent.croo.network/agents/b3c0b29a-d5a1-4066-ae7c-36ea84f6d231) · [Architecture](#how-it-works) · [Use it from Claude Desktop](#bonus-hire-vericlaim-from-claude-desktop-mcp)
 
 **🟢 Live & proven on-chain** — real CAP settlements on Base (escrow → deliver → USDC):
 - **Buyers hire VeriClaim:** [`0xe45cf4b8…`](https://basescan.org/tx/0xe45cf4b86e118cba78d65934486fbe779ed9d1869412967d93c40651ea7d0f1e) · [`0x0638213d…`](https://basescan.org/tx/0x0638213d0b93e7c63dedffb31051e85e2ed21450257953284154baeae29163d8)
@@ -91,10 +91,10 @@ denial alleges **fraud or misrepresentation**, VeriClaim dynamically **recruits 
 no collision, Robert Hayes → **DENIED** — the panel upholds valid denials too. It's an auditor, not a
 rubber stamp.)*
 
-**Proven, not just claimed — with an ablation.** A head-to-head [eval](eval/) shows the honest picture:
-the **decision moat is retrieval.** A single GPT-4o drops to **3/4** without the policy corpus (it
-*wrongly denies* a claim overturnable only by §12.3, a clause that lives in the policy) and recovers to
-**4/4** when handed the same retrieved clauses. VeriClaim's edge over a single call is the **process** a
+**Proven, not just claimed — with an ablation.** A head-to-head [eval](eval/) (n=5) shows the honest picture:
+the **decision moat is retrieval.** VeriClaim scores **5/5**. A single GPT-4o drops to **4/5** without the
+policy corpus (it *wrongly denies* a claim overturnable only by §12.3, a clause that lives in the policy)
+and recovers to **5/5** when handed the same retrieved clauses. VeriClaim's edge over a single call is the **process** a
 black box can't give you: an auditable adversarial transcript, impartiality (it upholds valid denials too),
 a fraud specialist recruited on demand, and a tamper-evident audit hash.
 
