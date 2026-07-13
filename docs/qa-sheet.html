@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#09285C; --navy2:#061A3D; --blue:#126CEB; --blueL:#4DA2FF;
+    --ink:#0A1730; --slate:#5B6B85; --line:#E4EAF5; --paper:#F3F6FC; --green:#22B36B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{ font-family:'Inter',-apple-system,'Segoe UI',Roboto,sans-serif; color:var(--ink); background:#fff; }
+  @page{ size:Letter; margin:0; }
+  .page{ width:8.5in; padding:0 0 0.5in; }
+
+  .hero{ background:linear-gradient(135deg,var(--navy) 0%, var(--navy2) 100%); color:#fff; padding:34px 44px 30px; position:relative; overflow:hidden; }
+  .hero .glow{ position:absolute; width:520px; height:520px; right:-120px; top:-220px; background:radial-gradient(circle,#1b4fa8 0%,transparent 68%); opacity:.6; }
+  .brand{ display:flex; align-items:center; gap:14px; position:relative; }
+  .brand .wm{ font-weight:800; font-size:30px; letter-spacing:-.5px; }
+  .brand .wm b{ color:var(--blueL); font-weight:800; }
+  .tagline{ margin-top:14px; font-size:15px; font-weight:500; color:#B9CBE8; position:relative; }
+  .tagline b{ color:#fff; }
+  .kicker{ position:absolute; top:34px; right:44px; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--blueL); border:1px solid #2b558f; padding:7px 14px; border-radius:999px; }
+  .lead{ margin:22px 44px 4px; font-size:14.5px; line-height:1.5; color:var(--slate); }
+  .lead b{ color:var(--navy); }
+
+  .sec{ margin:22px 44px 0; }
+  .sec-h{ font-size:12px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--blue); border-bottom:2px solid var(--line); padding-bottom:7px; margin-bottom:12px; }
+  .qa{ break-inside:avoid; margin-bottom:13px; }
+  .q{ font-size:14px; font-weight:800; color:var(--navy); display:flex; gap:9px; }
+  .q .n{ color:var(--blue); }
+  .a{ font-size:12.6px; line-height:1.5; color:#33415C; margin-top:3px; padding-left:22px; }
+  .a b{ color:var(--navy); font-weight:700; }
+
+  .verify{ margin:24px 44px 0; background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:16px 20px; display:flex; gap:26px; flex-wrap:wrap; }
+  .verify .vh{ font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--navy); width:100%; margin-bottom:2px; }
+  .vitem{ font-size:12.5px; color:#33415C; }
+  .vitem .l{ font-weight:700; color:var(--navy); }
+  .vitem .u{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--blue); display:block; margin-top:1px; }
+  .foot{ margin:16px 44px 0; font-size:11px; color:#94A3B8; display:flex; justify-content:space-between; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="hero">
+    <div class="glow"></div>
+    <div class="kicker">Demo Day · Q&amp;A Brief</div>
+    <div class="brand">
+      <svg width="46" height="53" viewBox="28 22 316 366"><g transform="translate(-163.74 29.26) scale(0.4464)">
+        <path fill="#fff" transform="translate(-257 -431)" d="M1017.5 455.055C1021.72 455.481 1042.44 463.537 1047.6 465.427L1120.71 492.47C1180.85 515.184 1241.31 537.078 1302.05 558.146C1294.06 568.724 1261.49 601.281 1251.03 611.086C1244.9 609.773 1237.14 607.137 1231.18 604.873C1161.51 578.441 1090.41 554.602 1021.19 527.092C1005.82 531.786 986.088 540.519 970.064 545.926C907.64 566.989 844.481 593.422 782.285 614.168C781.523 626.463 782.093 646.44 782.097 659.162L782.107 746.002C782.125 769.143 782.006 792.283 781.748 815.422C781.528 837.751 780.565 877.304 786.044 898.552C808.661 986.264 899.757 1056.78 971.334 1105.63C987.449 1116.62 1006.71 1126.82 1023.14 1137.31C1052.74 1119.24 1081.35 1099.61 1108.86 1078.5C1169.78 1030.99 1246.45 963.817 1256.45 883.019C1259.28 864.182 1258.21 826.732 1258.41 806.189C1269.08 795.039 1316.63 741.502 1323.78 737.75L1325.01 738.566C1326.35 746.331 1325.89 773.795 1325.67 783.08C1324.73 822.952 1328.96 880.012 1318.92 917.841C1282.94 1053.42 1135.56 1148.99 1023.84 1216.71C948.585 1175.95 864.26 1118.56 803.931 1057.62C770.661 1024.01 739.185 976.536 724.741 931.323C711.28 889.188 713.242 845.22 713.403 801.416L713.751 710.388C713.879 664.453 712.709 615.623 713.853 570.029C731.483 560.183 777.001 544.819 797.756 537.167L953.046 479.989C963.697 476.13 1010.01 460.223 1017.5 455.055Z"/>
+        <path fill="#4DA2FF" transform="translate(-257 -431)" d="M1356.49 549.781C1358.89 553.43 1358.21 638.4 1358.25 650.823C1343.11 668.293 1322.04 689.214 1305.87 706.406C1261.64 753.855 1216.49 800.44 1170.45 846.136C1143.89 872.71 1117.17 899.118 1090.28 925.358C1067.88 947.554 1043.18 972.649 1019.98 993.666C1006.17 981.286 989.8 963.38 976.516 949.744L881.811 851.5C872.869 842.136 863.533 832.642 855.053 822.891C859.433 817.755 868.438 809.295 873.456 804.219C884.031 793.614 894.339 782.746 904.37 771.626C911.02 776.946 927.876 795.938 935.013 803.203C963.659 832.363 990.798 863.695 1020.38 891.928C1099.4 814.854 1177.35 736.689 1254.2 657.455C1283.07 627.64 1310.39 596.049 1339.68 566.573C1345.23 560.982 1350.49 554.88 1356.49 549.781Z"/>
+      </g></svg>
+      <div class="wm">Veri<b>Claim</b></div>
+    </div>
+    <div class="tagline">Every claim deserves a fair trial. <b>Impartial, verifiable, on-chain.</b> An impartial multi-agent insurance-claim adjudicator, live on CROO.</div>
+  </div>
+
+  <div class="lead">Anticipated <b>Q&amp;A</b> for the live panel. VeriClaim runs a 5-agent adversarial debate, plus a dynamic 6th fraud agent, over the real policy clauses. It returns a cited approve or deny verdict, seals it with a SHA-256 hash, and settles each adjudication in USDC on Base through CROO's Agent Protocol.</div>
+
+  <div class="sec">
+    <div class="sec-h">How it works. Architecture and correctness</div>
+    <div class="qa"><div class="q"><span class="n">1.</span><span>How does the debate become a verdict? Is it just another LLM guess?</span></div>
+      <div class="a">The Adjudicator applies a <b>deterministic rubric over the retrieved clauses</b>. Is a covered peril triggered? Does an exclusion control? Is the filing window met? The full transcript together with that rubric forms the audit, so the decision stays traceable and readable.</div></div>
+    <div class="qa"><div class="q"><span class="n">2.</span><span>Is it reproducible and defensible?</span></div>
+      <div class="a">Low-temperature inference and the structured rubric keep verdicts stable. The <b>SHA-256 seal</b> fixes the exact resolution so it cannot be altered afterward. The hash proves <b>integrity</b>. The cited-clause rubric proves the <b>reasoning</b>.</div></div>
+    <div class="qa"><div class="q"><span class="n">3.</span><span>How do you prevent hallucinated or wrong clauses?</span></div>
+      <div class="a">Every argument is grounded in clauses <b>pulled straight from the signed policy document</b>, and each citation is checked against the source text. On the roadmap: a published citation-accuracy metric on a labeled set.</div></div>
+    <div class="qa"><div class="q"><span class="n">4.</span><span>What is actually on-chain, the decision or the payment?</span></div>
+      <div class="a">The order <b>carries the verdict's SHA-256 hash</b>, so the transaction is bound to the decision. Only the hash and the payment settle on-chain. The claim data stays off-chain.</div></div>
+    <div class="qa"><div class="q"><span class="n">5.</span><span>Why on-chain, why CROO?</span></div>
+      <div class="a">It carries weight in three ways. A <b>neutral, tamper-evident audit trail</b> that neither party controls. <b>Agent-to-agent distribution</b>, since other agents can hire VeriClaim directly. And instant USDC micro-settlement. Remove it and you lose the trust rail and the distribution channel.</div></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Trust, impartiality and compliance</div>
+    <div class="qa"><div class="q"><span class="n">6.</span><span>Is the verdict legally binding? Who is liable if it is wrong?</span></div>
+      <div class="a">It is an <b>advisory second opinion, auditable, with a human in the loop</b>. That framing is deliberate. It delivers defensibility while staying clear of licensed adjudication, and it keeps a person in the decision.</div></div>
+    <div class="qa"><div class="q"><span class="n">7.</span><span>How is it impartial if the claimant is the one paying?</span></div>
+      <div class="a">The same engine <b>upholds valid denials</b> and overturns wrong ones with the same rigor. In our illustrative ablation it overturned two wrong denials and upheld one valid denial. On the roadmap: an <b>independent, third-party benchmark</b> with false-positive and false-negative rates.</div></div>
+    <div class="qa"><div class="q"><span class="n">8.</span><span>Data privacy, PHI, PII?</span></div>
+      <div class="a">Only the <b>hash and the payment</b> ever touch the chain. The claim data stays off-chain. No claim data is used for training. Privacy-first, human-in-the-loop by design.</div></div>
+    <div class="qa"><div class="q"><span class="n">9.</span><span>Is "1 in 7 claims denied" real?</span></div>
+      <div class="a">It comes from <b>KFF</b>, on ACA in-network claim denials. We focus on the <b>disputed or wrongly-denied</b> subset, the claims actually worth appealing.</div></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-h">Business. Market, model and moat</div>
+    <div class="qa"><div class="q"><span class="n">10.</span><span>Who is the first paying customer?</span></div>
+      <div class="a">The beachhead is <b>claimant-side appeal platforms and legaltech</b>, sold as B2B2C infrastructure. Agents on CROO are the <b>live distribution channel</b>, with 9 real paid orders today. Insurers and direct claimants come later.</div></div>
+    <div class="qa"><div class="q"><span class="n">11.</span><span>Unit economics. The $0.10 fee cannot be the business?</span></div>
+      <div class="a">Correct. The <b>ten-cent rate on CROO is only for testing</b>. Cost sits around <b>$0.25 per adjudication</b>. Production pricing follows the value: <b>$2 to $5 per adjudication</b> on the infra tier, or a <b>success fee near 12% of the recovered claim</b>. Gross margin lands around 90%.</div></div>
+    <div class="qa"><div class="q"><span class="n">12.</span><span>What is the moat? Can't anyone wire up GPT to argue both sides?</span></div>
+      <div class="a">The debate is the demo. The moat is the <b>vertical</b>: a proprietary policy-clause corpus and an outcome-data flywheel, an impartial-audit <b>trust standing</b>, on-chain composability and distribution, and a tamper-evident record that incumbents cannot retrofit quickly.</div></div>
+  </div>
+
+  <div class="verify">
+    <div class="vh">Verify every claim yourself</div>
+    <div class="vitem"><span class="l">Live on CROO</span>, VeriClaim, 9 real paid orders <span class="u">agent.croo.network/agents/b3c0b29a…</span></div>
+    <div class="vitem"><span class="l">On-chain settlement</span>, real USDC tx on Base <span class="u">basescan.org/tx/0x9700c23a…89cfc8</span></div>
+    <div class="vitem"><span class="l">Open-source, MIT</span>, full code and tests <span class="u">github.com/kasbsquall/vericlaim</span></div>
+  </div>
+
+  <div class="foot"><span>VeriClaim, CROO Agent Hackathon, Demo Day</span><span>Impartial, Verifiable, On-chain</span></div>
+</div>
+</body>
+</html>

@@ -20,6 +20,8 @@ $0.10 USDC on [CROO](https://agent.croo.network).**
 - **Agent-to-agent — 3 distinct agents hired VeriClaim over CAP:** ClaimIngester [`0x318b7c1c…`](https://basescan.org/tx/0x318b7c1c7288ea4c9c830a01643b6d31d9f084ebbeb8cbbc6193ef50570b762c) · ReportExporter [`0x3e0226b7…`](https://basescan.org/tx/0x3e0226b7e8e6601a0b14b1a4bc486dd7c7d1e6cfbdc3a0a85e0e6d3242eed64a) · PolicyExtractor [`0x94823df6…`](https://basescan.org/tx/0x94823df6fc9f2fd74c898dd03708ca341279e32dff31cf8d7a72c077fce0ca3d)
 - **VeriClaim *composes* — it hires specialists on-chain, driven by the case:** PolicyExtractor [`0x906c5791…`](https://basescan.org/tx/0x906c5791fab4f73f1d3aeb5eba615369b94ee6c6b174b27605f69707cfea1dc7) · ReportExporter [`0x9700c23a…`](https://basescan.org/tx/0x9700c23a99e076c6a7cefeeebf42313a6772701278217959407ce9b37a89cfc8)
 
+**📋 For judges:** [Quick-verify (real txs, both A2A directions)](docs/JUDGE-VERIFY.md) · [Q&A brief (PDF)](docs/VeriClaim-QA-Sheet.pdf)
+
 </div>
 
 ---
