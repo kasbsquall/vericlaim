@@ -40,11 +40,18 @@ def _build_response(result: DebateResult) -> dict:
     return {
         "decision": result.decision,
         "approved_amount": result.approved_amount,
+        # payable_amount matches the store listing's promised field; 0 when nothing is payable.
+        "payable_amount": result.approved_amount if result.approved_amount is not None else 0.0,
         "reasoning": result.legal_reasoning,
         "cited_clauses": result.cited_clauses,
         "audit_hash": result.audit_hash,
         "agents_involved": result.agents_involved,
-        "debate_transcript": result.transcript_summary,
+        # Full ordered debate, not a truncated summary, so the caller can audit every turn.
+        "debate_transcript": [
+            {"agent": t["agent"], "content": t["content"]}
+            for t in result.transcript
+            if t["slug"] != "coordinator"
+        ],
     }
 
 

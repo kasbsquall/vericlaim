@@ -16,6 +16,7 @@ from decimal import Decimal, InvalidOperation
 
 from agents import alex, blake, coordinator, morgan, quinn, sam
 from database.connection import AsyncSessionLocal
+from rag.retriever import search_clauses
 from utils.audit import hash_resolution
 
 # Sam's structured resolution parsing (ported verbatim from the orchestrator).
@@ -113,6 +114,12 @@ async def run_debate(payload: dict) -> DebateResult:
         context.append(("Blake", blake_text))
         transcript.append({"slug": "blake", "agent": "Blake", "content": blake_text})
 
+        # The exact clauses retrieved from the policy corpus for this case. Sam may only cite
+        # from these; anything else is ungrounded and dropped below (deterministic vector search,
+        # same query/params Morgan uses, so this mirrors what the panel actually saw).
+        grounded = await search_clauses(
+            session, _retrieval_query(payload), policy_type=policy_type, limit=5
+        )
         morgan_text = await morgan.run(
             session, context, _retrieval_query(payload), policy_type=policy_type
         )
@@ -135,6 +142,10 @@ async def run_debate(payload: dict) -> DebateResult:
     transcript.append({"slug": "sam", "agent": "Sam", "content": sam_text})
 
     parsed = _parse_resolution(sam_text)
+    # Ground the citations: keep only clauses actually retrieved from the policy corpus, so the
+    # panel can never cite a clause it never saw (fixes hallucinated §-citations).
+    grounded_numbers = {c["clause_number"] for c in grounded}
+    grounded_cited = [c for c in parsed["cited_clauses"] if c in grounded_numbers]
     approved_amount = (
         float(parsed["approved_amount"]) if parsed["approved_amount"] is not None else None
     )
@@ -149,7 +160,7 @@ async def run_debate(payload: dict) -> DebateResult:
         decision=parsed["decision"],
         approved_amount=approved_amount,
         legal_reasoning=sam_text,
-        cited_clauses=parsed["cited_clauses"],
+        cited_clauses=grounded_cited,
         audit_hash=audit["sha256"],
         transcript=transcript,
         agents_involved=[t["agent"] for t in transcript if t["slug"] != "coordinator"],
