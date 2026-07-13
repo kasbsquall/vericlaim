@@ -16,6 +16,10 @@ services:
       - vericlaim_pgdata:/var/lib/postgresql/data
       # schema.sql runs automatically on first boot of a fresh volume
       - ./agent/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      # 02-approle creates a dedicated `vericlaim` login role so the app never depends
+      # on the shared `postgres` superuser (host tooling on the prod VPS kept setting it NOLOGIN).
+      # Point DATABASE_URL at vericlaim:vc_app_2026 on that host.
+      - ./agent/database/02-approle.sql:/docker-entrypoint-initdb.d/02-approle.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d vericlaim"]
       interval: 5s
