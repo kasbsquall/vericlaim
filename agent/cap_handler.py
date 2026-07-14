@@ -147,14 +147,37 @@ _CLAIM_KEYS = ("claim_number", "policy", "amount_requested", "incident_type")
 _ENVELOPE_KEYS = ("text", "raw_text", "claim", "input", "data", "message", "requirements")
 
 
+def _claim_from_text(text: str) -> dict:
+    """Wrap a free-text / natural-language claim into the structured payload the panel expects.
+
+    Buyers and LLM-driven certifiers often describe a claim in prose instead of our JSON schema.
+    Rather than reject it, we adjudicate it: the text carries into both the incident description
+    and the denial reason, so RAG retrieval and the fraud trigger still fire off the same content.
+    A live adjudicator should never hand back "no claim" for a genuine, substantive ask.
+    """
+    text = text.strip()
+    return {
+        "claim_number": "ADHOC",
+        "policy": {},
+        "incident_type": "unspecified",
+        "incident_description": text,
+        "amount_requested": 0,
+        "original_denial_reason": text,
+    }
+
+
 def _parse_requirements(requirements: object) -> dict:
     # CROO may deliver the claim as a dict, a JSON string, OR wrapped in an envelope like
     # {"text": "<claim json>"} (what the store's "Hire" box produces). Unwrap nested layers and
     # parse down to the real claim dict, so the debate sees policy/amount — not {"text": ...},
     # which would otherwise yield an empty claim -> DENIED $0.
     claim: object = requirements
+    last_text = ""  # longest plain-text blob seen while unwrapping, for the free-text fallback
     for _ in range(4):
         if isinstance(claim, str):
+            stripped = claim.strip()
+            if len(stripped) > len(last_text):
+                last_text = stripped
             try:
                 claim = json.loads(claim)
                 continue
@@ -169,6 +192,11 @@ def _parse_requirements(requirements: object) -> dict:
             claim = nested
             continue
         break
+    # Fallback: a substantive natural-language claim gets adjudicated instead of rejected. Only a
+    # genuinely empty order (no text, or "{}") still raises, so start_provider's empty-hire notice
+    # still fires for a hire with nothing pasted in.
+    if len(last_text) >= 20 and last_text not in ("{}", "[]"):
+        return _claim_from_text(last_text)
     raise ValueError(
         f"Negotiation requirements is not valid claim JSON: {requirements!r}"
     )
